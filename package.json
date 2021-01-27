@@ -1,0 +1,41 @@
+{
+  "name": "messenger_webrtc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NguyennDuyyThaii/Messenger_WebRTC.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NguyennDuyyThaii/Messenger_WebRTC/issues"
+  },
+  "homepage": "https://github.com/NguyennDuyyThaii/Messenger_WebRTC#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.18.2",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.2.0",
+    "cookie-parser": "^1.4.5",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-ejs-extend": "0.0.1",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.9.2",
+    "lodash": "^4.17.20",
+    "mongoose": "^5.11.12",
+    "nodemailer": "^6.4.17",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport.socketio": "^3.7.0",
+    "socket.io": "^3.1.0",
+    "uuid": "^8.3.2"
+  }
+}

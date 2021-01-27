@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đăng nhập - Admin-Website</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link href="./../login/css/font-awesome.min.css" rel="stylesheet">
+<link href="./../login/css/bootstrap.min.css" rel="stylesheet">
+<link href="./../login/css/datepicker3.css" rel="stylesheet">
+<link href="./../login/css/bootstrap-table.css" rel="stylesheet">
+<link href="./../login/css/styles.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+<style>
+	.social{
+		text-align: center;
+	}
+#google_login{
+	background:#ff0000;
+	color: #fff;
+	padding: 1.3rem 5.5rem;
+	margin: 1rem;
+	font-size: 2rem;
+	border-radius: 10px;
+}
+#google_login:hover{
+	background: #191970;
+}
+#facebook_login{
+	background: dodgerblue;
+	color: #fff;
+	padding: 1.3rem 5.5rem;
+	font-size: 2rem;
+	border-radius: 10px;
+}
+#facebook_login:hover{
+	background:#191970;
+}
+</style>
+</head>
+
+<body>
+	
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+			<div class="login-panel panel panel-default">
+				<div class="panel-heading" style="background: #3498db;color: #fff;">Nguyễn Duy Thái - Ph09550 - <b>ĐĂNG NHẬP</b></div>
+				<div class="panel-body">
+						<% if(success != ""){ %> 
+							<% success.forEach(item => { %>
+								<div class="alert alert-success"><%- item %> </div>
+							<% }); %>  
+						<% } %> 
+						<% if(errors != ""){ %> 
+							<% errors.forEach(item => { %>
+								<div class="alert alert-danger"><%- item %> </div>
+							<% }); %>  
+						<% } %> 
+				<br>
+					
+						<div class="social">
+								<a id="google_login" class="circle google" href="/signin/google" title="Đăng nhập bằng tài khoản Google">
+								<i class="fa fa-google-plus fa-fw"></i>
+								</a>
+								<a id="facebook_login" class="circle facebook" href="/auth/facebook" title="Đăng nhập bằng tài khoản Facebook">
+								<i class="fa fa-facebook fa-fw"></i>
+								</a>
+							</div>
+						
+						<br>
+					
+					<div class="form-group">
+						<label>
+							Hoặc đăng nhập với:
+						
+						</label>
+					</div>
+					<form role="form" method="post" action="/login">
+						<fieldset>
+							<div class="form-group">
+								<input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="Mật khẩu" name="password" type="password" value="">
+							</div>
+							<div class="checkbox">
+								<label>
+									<input name="remember" type="checkbox" value="Remember Me">Nhớ tài khoản
+								</label>
+							</div>
+							<button type="submit" class="btn btn-primary">Đăng nhập</button><br><br>
+							<p>Bạn chưa có tài khoản? <a href="/register">Đăng Kí Ngay</a></p>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div><!-- /.col-->
+	</div><!-- /.row -->	
+</body>
+
+</html>
