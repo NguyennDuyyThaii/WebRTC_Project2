@@ -1,5 +1,5 @@
 let { pushSocketIdToArray, emitNotifyToArray, removeSocketIdFromArray } = require("./../../helpers/socketsHelpers")
-let addNewContact = (io) => {
+let removeRequestContact = (io) => {
     let clients = {};
     io.on("connection", (socket) => {
         // id socket alsway change ++ push socket id to array
@@ -8,19 +8,16 @@ let addNewContact = (io) => {
             /**
              * 
              */
-        socket.on("add-new-contact", (data) => {
-            // console.log(data)
-            // console.log(socket.request.user)
-
+        socket.on("remove-request-contact", (data) => {
             let currentUser = {
-                id: socket.request.user._id,
-                username: socket.request.user.username,
-                avatar: socket.request.user.avatar,
+                id: socket.request.user._id
             };
             // emit notification
             if (clients[data.contactId]) {
                 // gia su no mo 2 tab, thi hien ca 2 tab luon
-                emitNotifyToArray(clients, data.contactId, io, "response-add-new-contact", currentUser)
+                clients[data.contactId].forEach(socketId => {
+                    emitNotifyToArray(clients, data.contactId, io, "response-remove-request-contact", currentUser)
+                });
             }
         });
         /**
@@ -32,4 +29,5 @@ let addNewContact = (io) => {
         })
     });
 };
-module.exports = addNewContact;
+
+module.exports = removeRequestContact
