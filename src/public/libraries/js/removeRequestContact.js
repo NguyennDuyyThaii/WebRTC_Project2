@@ -36,8 +36,9 @@ function removeRequestContact() {
 }
 
 socket.on("response-remove-request-contact", function(user) {
-    $(".noti_content").find(`span[data-uid=${user.id}]`).remove();
-    // prepend ngược với append
+    $(".noti_content").find(`div[data-uid=${user.id}]`).remove();
+    $("ul.list-notifications").find(`li>div[data-uid=${user.id}]`).parent().remove()
+        // prepend ngược với append
     decreaseNumberNotifiContact("count-request-contact-received");
     decreaseNumberNotification("noti_contact_counter");
     decreaseNumberNotification("noti_counter");
