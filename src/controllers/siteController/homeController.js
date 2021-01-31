@@ -1,13 +1,12 @@
+const { notificationService } = require("./../../services/site/index")
 
-let getHome =  (req,res) => {
-    // let item = {
-    //     userId: '600947cde9cd920d1d6a1b61',
-    //     contactId: '600803eb96b5be09913c081a',
-    //     status: false
-    // }
-    // await contactService.createNew(item)
-    return res.render('main/home/home')
+let getHome = async(req, res) => {
+    let notifocations = await notificationService.getNotification(req.user._id)
+    return res.render('main/home/home', {
+        notifocations: notifocations
+    })
 }
 module.exports = {
-    getHome: getHome
+    getHome: getHome,
+
 }
