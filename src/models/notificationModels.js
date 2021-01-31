@@ -50,6 +50,17 @@ notificationSchema.statics = {
                 { "isRead": false }
             ]
         }).exec()
+    },
+    /**
+     * read more noti
+     * @param {*} userId 
+     * @param {*} skip dont care first 10 item, take next 10 item
+     * @param {*} limit 
+     */
+    readMore(userId, skip, limit) {
+        return this.find({
+            "recieverId": userId
+        }).sort({ "createdAt": -1 }).skip(skip).limit(limit).exec()
     }
 
 }

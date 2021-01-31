@@ -27,7 +27,28 @@ let countNotifUnread = (currentUserId) => {
         }
     })
 }
+
+/**
+ * read more notifications, max = 10 item one time
+ * @param {String} currentUserId 
+ * @param {Number} skipNumberNotification 
+ */
+let readMore = (currentUserId, skipNumberNotification) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            let newNotifications = await notificationModel.model.readMore(currentUserId, skipNumberNotification, limit = 10)
+            let notifContents = newNotifications.map(async(item) => {
+                let sender = await userModel.findUserById(item.senderId)
+                return notificationModel.content.GET_CONTENT(item.type, item.isRead, sender._id, sender.username, sender.avatar)
+            })
+            resolve(await Promise.all(notifContents))
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
 module.exports = {
     getNotification: getNotification,
-    countNotifUnread: countNotifUnread
+    countNotifUnread: countNotifUnread,
+    readMore: readMore
 }

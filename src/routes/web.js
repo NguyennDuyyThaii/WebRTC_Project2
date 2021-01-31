@@ -3,11 +3,12 @@ const { registerValidation } = require("./../validations/auth/registerValidation
 const initPassportLocal = require("./../controllers/passportController/local")
 const {
     homeController,
-    contactController
+    contactController,
+    notificationController
 } = require("./../controllers/siteController/index")
-/**
- * config libraly
- */
+    /**
+     * config libraly
+     */
 const express = require("express")
 const passport = require("passport")
 const router = express.Router()
@@ -16,10 +17,10 @@ const router = express.Router()
  * initPassport
  */
 initPassportLocal()
-/**
- * router
- * @param {*} app 
- */
+    /**
+     * router
+     * @param {*} app 
+     */
 let initRouter = (app) => {
     /**
      * SignIn-SignUp
@@ -39,13 +40,16 @@ let initRouter = (app) => {
      * Site view
      */
     router.get('/', homeController.getHome)
-    /**
-     * Find User to contact, add contact, destroy contact
-     */
+        /**
+         * Find User to contact, add contact, destroy contact
+         */
     router.get('/contact/find-user/:keyword', contactController.findUserContact)
     router.post('/contact/add-new-contact', contactController.addNewContact)
     router.delete('/contact/remove-request-contact', contactController.removeRequestContact)
-
+        /**
+         * load more notifications
+         */
+    router.get('/notification/read-more', notificationController.getMoreNotifi)
     return app.use('/', router)
 }
 module.exports = initRouter
