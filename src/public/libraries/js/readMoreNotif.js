@@ -7,6 +7,7 @@ $(document).ready(function() {
                 alertify.notify("Bạn không còn thông báo nào cả", "error", 7)
                 return false
             }
+            // 
             notifications.forEach(function(item) {
                 $("ul.list-notifications").append(`<li>${item}</li>`)
             })

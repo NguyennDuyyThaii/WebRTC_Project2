@@ -47,9 +47,10 @@ let initRouter = (app) => {
     router.post('/contact/add-new-contact', contactController.addNewContact)
     router.delete('/contact/remove-request-contact', contactController.removeRequestContact)
         /**
-         * load more notifications
+         * load more notifications + mark all as read 
          */
     router.get('/notification/read-more', notificationController.getMoreNotifi)
+    router.put('/notification/mark-all-as-read', notificationController.markAllAsRead)
     return app.use('/', router)
 }
 module.exports = initRouter

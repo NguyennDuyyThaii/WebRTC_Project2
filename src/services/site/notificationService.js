@@ -34,21 +34,39 @@ let countNotifUnread = (currentUserId) => {
  * @param {Number} skipNumberNotification 
  */
 let readMore = (currentUserId, skipNumberNotification) => {
+        return new Promise(async(resolve, reject) => {
+            try {
+                let newNotifications = await notificationModel.model.readMore(currentUserId, skipNumberNotification, limit = 10)
+                let notifContents = newNotifications.map(async(item) => {
+                    let sender = await userModel.findUserById(item.senderId)
+                    return notificationModel.content.GET_CONTENT(item.type, item.isRead, sender._id, sender.username, sender.avatar)
+                })
+                resolve(await Promise.all(notifContents))
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+    /**
+     * mark notification as read
+     * @param {string} currentUserId 
+     * @param {array} targetUsers 
+     */
+let markAllAsRead = (currentUserId, targetUsers) => {
     return new Promise(async(resolve, reject) => {
         try {
-            let newNotifications = await notificationModel.model.readMore(currentUserId, skipNumberNotification, limit = 10)
-            let notifContents = newNotifications.map(async(item) => {
-                let sender = await userModel.findUserById(item.senderId)
-                return notificationModel.content.GET_CONTENT(item.type, item.isRead, sender._id, sender.username, sender.avatar)
-            })
-            resolve(await Promise.all(notifContents))
+            await notificationModel.model.markAllAsRead(currentUserId, targetUsers)
+            resolve(true)
         } catch (error) {
-            reject(error)
+            // i want return true false to client
+            console.log(`Error when mark notification as read: ${error}`)
+            reject(false)
         }
     })
 }
 module.exports = {
     getNotification: getNotification,
     countNotifUnread: countNotifUnread,
-    readMore: readMore
+    readMore: readMore,
+    markAllAsRead: markAllAsRead
 }
