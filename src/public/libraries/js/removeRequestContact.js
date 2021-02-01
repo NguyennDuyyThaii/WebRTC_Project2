@@ -28,6 +28,8 @@ function removeRequestContact() {
                     decreaseNumberNotifiContact("count-request-contact-sent");
                     // actice realtime
 
+                    $("#request-contact-sent").find(`li[data-uid=${targetId}]`)
+
                     socket.emit("remove-request-contact", { contactId: targetId });
                 }
             },
@@ -38,6 +40,7 @@ function removeRequestContact() {
 socket.on("response-remove-request-contact", function(user) {
     $(".noti_content").find(`div[data-uid=${user.id}]`).remove();
     $("ul.list-notifications").find(`li>div[data-uid=${user.id}]`).parent().remove()
+    $("#request-contact-received").find(`li[data-uid]=${user.id}`).remove()
         // prepend ngược với append
     decreaseNumberNotifiContact("count-request-contact-received");
     decreaseNumberNotification("noti_contact_counter", 1);

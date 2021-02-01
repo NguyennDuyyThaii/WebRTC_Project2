@@ -10,5 +10,5 @@
  + phương thức post thì `return res.status(200).send({success: !!newContact})// return success:true` để bên query có thể biết thằng `succeess` để tiếp tục câu lệnh tiếp
  + |||||||||| GET_POST_DELETE ||||||||||
  + Hiên thị dữ liệu thì dùng `get->html(data)` vào để hiện dữ liệu ra
- + Xoá dữ liệu thì gọi đến `$.ajax` ở phía server dùng phương thức delete
+ + Xoá, put dữ liệu thì gọi đến `$.ajax` ở phía server dùng phương thức delete, put
  + Post dữ liệu thì `post` bình thường, nếu cần đến id thì `uid` là xong 
