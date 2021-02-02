@@ -7,7 +7,7 @@ let getNotification = (currentUserId, limit = 10) => {
                 // map# forEach la no
                 //return ra cho mk cai mang moi
             let notifContents = notifications.map(async(item) => {
-                let sender = await userModel.findUserById(item.senderId)
+                let sender = await userModel.getNormalUserById(item.senderId)
                 return notificationModel.content.GET_CONTENT(item.type, item.isRead, sender._id, sender.username, sender.avatar)
             })
             resolve(await Promise.all(notifContents))
@@ -38,7 +38,7 @@ let readMore = (currentUserId, skipNumberNotification) => {
             try {
                 let newNotifications = await notificationModel.model.readMore(currentUserId, skipNumberNotification, limit = 10)
                 let notifContents = newNotifications.map(async(item) => {
-                    let sender = await userModel.findUserById(item.senderId)
+                    let sender = await userModel.getNormalUserById(item.senderId)
                     return notificationModel.content.GET_CONTENT(item.type, item.isRead, sender._id, sender.username, sender.avatar)
                 })
                 resolve(await Promise.all(notifContents))

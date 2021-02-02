@@ -46,11 +46,15 @@ let initRouter = (app) => {
     router.get('/contact/find-user/:keyword', contactController.findUserContact)
     router.post('/contact/add-new-contact', contactController.addNewContact)
     router.delete('/contact/remove-request-contact', contactController.removeRequestContact)
+    router.get('/contacts/read-more', contactController.getMoreContact)
+    router.get('/contacts/read-more-sent', contactController.getMoreContactSent)
+    router.get('/contacts/read-more-received', contactController.getMoreContactReceived)
         /**
          * load more notifications + mark all as read 
          */
     router.get('/notification/read-more', notificationController.getMoreNotifi)
     router.put('/notification/mark-all-as-read', notificationController.markAllAsRead)
+
     return app.use('/', router)
 }
 module.exports = initRouter

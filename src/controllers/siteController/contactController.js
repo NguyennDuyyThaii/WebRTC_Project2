@@ -1,33 +1,61 @@
-const {contactService} = require("./../../services/site/index")
-let findUserContact = async (req,res) => {
+const { contactService } = require("./../../services/site/index")
+let findUserContact = async(req, res) => {
     try {
-        let currentUserId = req.user._id// session
+        let currentUserId = req.user._id // session
         let keyword = req.params.keyword
 
-        let users = await contactService.findUserContact(currentUserId,keyword)
-            users = JSON.parse(JSON.stringify(users))
-            return res.render('main/contact/section/findUserContact',{users})
+        let users = await contactService.findUserContact(currentUserId, keyword)
+        users = JSON.parse(JSON.stringify(users))
+        return res.render('main/contact/section/findUserContact', { users })
     } catch (error) {
         return res.status(500).send(error)
     }
 }
-let addNewContact = async (req,res) => {
+let addNewContact = async(req, res) => {
     try {
-        let currentUserId = req.user._id// session
+        let currentUserId = req.user._id // session
         let contactId = req.body.uid
-        let newContact = await contactService.addNew(currentUserId,contactId)
-        
-        return res.status(200).send({success: !!newContact})// return success:true
+        let newContact = await contactService.addNew(currentUserId, contactId)
+
+        return res.status(200).send({ success: !!newContact }) // return success:true
     } catch (error) {
         return res.status(500).send(error)
     }
 }
-let removeRequestContact = async (req,res) => {
+let removeRequestContact = async(req, res) => {
     try {
-        let currentUserId = req.user._id// session
+        let currentUserId = req.user._id // session
         let contactId = req.body.uid
-        let removeContact = await contactService.removeRequestContact(currentUserId,contactId)
-        return res.status(200).send({success: !!removeContact})// return success:true
+        let removeContact = await contactService.removeRequestContact(currentUserId, contactId)
+        return res.status(200).send({ success: !!removeContact }) // return success:true
+    } catch (error) {
+        return res.status(500).send(error)
+    }
+}
+let getMoreContact = async(req, res) => {
+    try {
+        let skipNumberContact = +(req.query.skipNumber)
+        let newContact = await contactService.readMore(req.user._id, skipNumberContact)
+        return res.status(200).send(newContact)
+    } catch (error) {
+        return res.status(500).send(error)
+    }
+}
+let getMoreContactSent = async(req, res) => {
+    try {
+        let skipNumberContact = +(req.query.skipNumber)
+        let newContact = await contactService.readMoreSent(req.user._id, skipNumberContact)
+        return res.status(200).send(newContact)
+    } catch (error) {
+        return res.status(500).send(error)
+    }
+}
+
+let getMoreContactReceived = async(req, res) => {
+    try {
+        let skipNumberContact = +(req.query.skipNumber)
+        let newContact = await contactService.getMoreContactReceived(req.user._id, skipNumberContact)
+        return res.status(200).send(newContact)
     } catch (error) {
         return res.status(500).send(error)
     }
@@ -35,5 +63,8 @@ let removeRequestContact = async (req,res) => {
 module.exports = {
     findUserContact: findUserContact,
     addNewContact: addNewContact,
-    removeRequestContact: removeRequestContact
+    removeRequestContact: removeRequestContact,
+    getMoreContact: getMoreContact,
+    getMoreContactSent: getMoreContactSent,
+    getMoreContactReceived: getMoreContactReceived
 }

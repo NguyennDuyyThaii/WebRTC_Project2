@@ -127,5 +127,47 @@ contactSchema.statics = {
             $and: [{ contactId: userId }, { status: false }],
         }).exec();
     },
+    /**
+     * 
+     * @param {*} userId 
+     * @param {*} skip 
+     * @param {*} limit 
+     */
+    readMore(userId, skip, limit) {
+        return this.find({
+                $and: [{
+                        $or: [{ userId: userId }, { contactId: userId }],
+                    },
+                    { status: true },
+                ],
+            })
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
+            .exec();
+    },
+    /**
+     * 
+     * @param {*} userId 
+     * @param {*} skip 
+     * @param {*} limit 
+     */
+    readMoreContactSent(userId, skip, limit) {
+        return this.find({
+                $and: [{ userId: userId }, { status: false }],
+            })
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
+            .exec();
+    },
+    readMoreContactSent(userId, skip, limit) {
+        return this.find({
+                $and: [{ contactId: userId }, { status: false }],
+            }).sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
+            .exec();
+    }
 };
 module.exports = mongoose.model("contact", contactSchema);
