@@ -49,10 +49,10 @@ let addNew = (currentUserId, contactId) => {
         resolve(newContact);
     });
 };
-let removeRequestContact = (currentUserId, contactId) => {
+let removeRequestContactSent = (currentUserId, contactId) => {
     return new Promise(async(resolve, reject) => {
-        await contactModel.removeRequestContact(currentUserId, contactId);
-        await notificationModel.model.removeRequestContactNotification(
+        await contactModel.removeRequestContactSent(currentUserId, contactId);
+        await notificationModel.model.removeRequestContactSentNotification(
             currentUserId,
             contactId,
             notificationModel.types.ADD_CONTACT
@@ -167,6 +167,7 @@ let readMoreSent = (currentUserId, skipNumber) => {
                 return await userModel.getNormalUserById(item.contactId);
             })
             resolve(await Promise.all(contacts))
+
         } catch (error) {
             reject(error);
         }
@@ -188,7 +189,7 @@ let getMoreContactReceived = (currentUserId, skipNumber) => {
 module.exports = {
     findUserContact: findUserContact,
     addNew: addNew,
-    removeRequestContact: removeRequestContact,
+    removeRequestContactSent: removeRequestContactSent,
     getContact: getContact,
     getContactSent: getContactSent,
     getContactReceived: getContactReceived,

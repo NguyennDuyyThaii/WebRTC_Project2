@@ -2,10 +2,11 @@ $(document).ready(function() {
     $("#link-read-more-contacts-sent").bind("click", function() {
         let skipNumber = $("#request-contact-sent").find("li").length
             // cach 2 ne
-        $("#link-read-more-contacts-sent").css("display")
+        $("#link-read-more-contacts-sent").css("display", "none")
         $.get(`/contacts/read-more-sent?skipNumber=${skipNumber}`, function(contacts) {
             if (!contacts.length) {
                 alertify.notify("Bạn không còn danh sách nào cả", "error", 7)
+                $("#link-read-more-contacts-sent").css("display", "inline-block")
                 return false
             }
             // 
@@ -34,7 +35,7 @@ $(document).ready(function() {
                                                                                                       
                                                                                                     </span>
                         </div>
-                        <div class="user-remove-request-sent
+                        <div class="user-remove-request-contact-sent display-importaint
                                                                                                     action-danger" data-uid="${item._id}">
                             Hủy yêu cầu
                         </div>
@@ -42,6 +43,8 @@ $(document).ready(function() {
                 </li>
                 `)
             })
+            removeRequestContactSent()
+            $("#link-read-more-contacts-sent").css("display", "inline-block")
         })
     })
 })

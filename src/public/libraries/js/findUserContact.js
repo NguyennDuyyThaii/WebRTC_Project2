@@ -10,15 +10,15 @@ function callFindUser(element) {
             alertify.notify("Lỗi từ khoá tìm kiếm, mời nhập lại", "errors", 7)
             return false
         }
-        $.get(`/contact/find-user/${keyword}`, function (data) {
+        $.get(`/contact/find-user/${keyword}`, function(data) {
             $('#find-user ul').html(data)
-            // after call list request to add contact
+                // after call list request to add contact
             addContact()
-            removeRequestContact()
-        }) 
+            removeRequestContactSent()
+        })
     }
 }
-$(document).ready(function () {
+$(document).ready(function() {
     $('#input-find-user-contact').bind("keypress", callFindUser)
     $('#btn-find-user-contact').bind("click", callFindUser)
-}) 
+})

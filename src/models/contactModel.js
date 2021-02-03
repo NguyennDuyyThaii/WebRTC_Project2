@@ -24,7 +24,7 @@ contactSchema.statics = {
      */
     findAllByUser(userId) {
         return this.find({
-            $or: [{ userId: userId }, { contactId: userId }],
+            $or: [{ "userId": userId }, { "contactId": userId }],
         }).exec();
     },
     /**
@@ -35,10 +35,10 @@ contactSchema.statics = {
     checkExists(userId, contactId) {
         return this.findOne({
             $or: [{
-                    $and: [{ userId: userId }, { contactId: contactId }],
+                    $and: [{ "userId": userId }, { "contactId": contactId }],
                 },
                 {
-                    $and: [{ userId: contactId }, { contactId: userId }],
+                    $and: [{ "userId": contactId }, { "contactId": userId }],
                 },
             ],
         }).exec();
@@ -48,9 +48,9 @@ contactSchema.statics = {
      * @param {*} userId
      * @param {*} contactId
      */
-    removeRequestContact(userId, contactId) {
+    removeRequestContactSent(userId, contactId) {
         return this.deleteOne({
-            $and: [{ userId: userId }, { contactId: contactId }],
+            $and: [{ "userId": userId }, { "contactId": contactId }],
         }).exec();
     },
     /**
@@ -61,12 +61,12 @@ contactSchema.statics = {
     getContacts(userId, limit) {
         return this.find({
                 $and: [{
-                        $or: [{ userId: userId }, { contactId: userId }],
+                        $or: [{ "userId": userId }, { "contactId": userId }],
                     },
                     { status: true },
                 ],
             })
-            .sort({ createdAt: -1 })
+            .sort({ "createdAt": -1 })
             .limit(limit)
             .exec();
     },
@@ -77,9 +77,9 @@ contactSchema.statics = {
      */
     getContactsSent(userId, limit) {
         return this.find({
-                $and: [{ userId: userId }, { status: false }],
+                $and: [{ "userId": userId }, { "status": false }],
             })
-            .sort({ createdAt: -1 })
+            .sort({ "createdAt": -1 })
             .limit(limit)
             .exec();
     },
@@ -90,9 +90,9 @@ contactSchema.statics = {
      */
     getContactsReceived(userId, limit) {
         return this.find({
-                $and: [{ contactId: userId }, { status: false }],
+                $and: [{ "contactId": userId }, { "status": false }],
             })
-            .sort({ createdAt: -1 })
+            .sort({ "createdAt": -1 })
             .limit(limit)
             .exec();
     },
@@ -103,9 +103,9 @@ contactSchema.statics = {
     countAllContacts(userId) {
         return this.countDocuments({
             $and: [{
-                    $or: [{ userId: userId }, { contactId: userId }],
+                    $or: [{ "userId": userId }, { "contactId": userId }],
                 },
-                { status: true },
+                { "status": true },
             ],
         }).exec();
     },
@@ -115,7 +115,7 @@ contactSchema.statics = {
      */
     countAllContactsSent(userId) {
         return this.countDocuments({
-            $and: [{ userId: userId }, { status: false }],
+            $and: [{ "userId": userId }, { "status": false }],
         }).exec();
     },
     /**
@@ -124,7 +124,7 @@ contactSchema.statics = {
      */
     countAllContactsReceived(userId) {
         return this.countDocuments({
-            $and: [{ contactId: userId }, { status: false }],
+            $and: [{ "contactId": userId }, { "status": false }],
         }).exec();
     },
     /**
@@ -136,12 +136,12 @@ contactSchema.statics = {
     readMore(userId, skip, limit) {
         return this.find({
                 $and: [{
-                        $or: [{ userId: userId }, { contactId: userId }],
+                        $or: [{ "userId": userId }, { "contactId": userId }],
                     },
-                    { status: true },
+                    { "status": true },
                 ],
             })
-            .sort({ createdAt: -1 })
+            .sort({ "createdAt": -1 })
             .skip(skip)
             .limit(limit)
             .exec();
@@ -154,17 +154,17 @@ contactSchema.statics = {
      */
     readMoreContactSent(userId, skip, limit) {
         return this.find({
-                $and: [{ userId: userId }, { status: false }],
+                $and: [{ "userId": userId }, { "status": false }]
             })
-            .sort({ createdAt: -1 })
+            .sort({ "createdAt": -1 })
             .skip(skip)
             .limit(limit)
             .exec();
     },
     readMoreContactSent(userId, skip, limit) {
         return this.find({
-                $and: [{ contactId: userId }, { status: false }],
-            }).sort({ createdAt: -1 })
+                $and: [{ "contactId": userId }, { "status": false }],
+            }).sort({ "createdAt": -1 })
             .skip(skip)
             .limit(limit)
             .exec();
