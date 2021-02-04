@@ -1,3 +1,5 @@
+const { removeRequestContactReceived } = require("../../../services/site/contactService")
+
 $(document).ready(function() {
     $("#link-read-more-contacts-received").bind("click", function() {
         let skipNumber = $("#request-contact-received").find("li").length
@@ -36,7 +38,7 @@ $(document).ready(function() {
                                                                                                                                         
                                                                                                                                         </span>
                                             </div>
-                                            <div class="user-acccept-contact-received" data-uid="
+                                            <div class="user-approve-request-contact-received" data-uid="
                                                                                                                                         ${item._id}
                                                                                                                                        ">
                                                 Chấp nhận
@@ -51,6 +53,8 @@ $(document).ready(function() {
                                     </li>
                 `)
             })
+            approveRequestContactReceived()
+            removeRequestContactReceived()
         })
     })
 })

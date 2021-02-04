@@ -197,6 +197,24 @@ let removeRequestContactReceived = (currentUserId, contactId) => {
         resolve(true);
     });
 }
+let approveRequestContactReceived = (currentUserId, contactId) => {
+    return new Promise(async(resolve, reject) => {
+        let t = await contactModel.approveRequestContactReceived(currentUserId, contactId);
+        // console.log(t.nModified)
+        // console.log(t)
+        if (t.nModified === 0) {
+            return reject(false);
+        }
+
+        let notifiItem = {
+            senderId: currentUserId,
+            recieverId: contactId,
+            type: notificationModel.types.APPROVE_CONTACT,
+        };
+        await notificationModel.model.createNew(notifiItem);
+        resolve(true);
+    });
+}
 module.exports = {
     findUserContact: findUserContact,
     addNew: addNew,
@@ -210,5 +228,6 @@ module.exports = {
     readMore: readMore,
     readMoreSent: readMoreSent,
     getMoreContactReceived: getMoreContactReceived,
-    removeRequestContactReceived: removeRequestContactReceived
+    removeRequestContactReceived: removeRequestContactReceived,
+    approveRequestContactReceived: approveRequestContactReceived
 };

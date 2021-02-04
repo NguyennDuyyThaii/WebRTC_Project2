@@ -61,6 +61,7 @@ let initRouter = (app) => {
         contactController.getMoreContactReceived
     );
     router.delete('/contact/remove-request-contact-received', contactController.removeRequestContactReceived)
+    router.put('/contact/approve-request-contact-received', contactController.approveRequestContactReceived)
         /**
          * load more notifications + mark all as read
          */

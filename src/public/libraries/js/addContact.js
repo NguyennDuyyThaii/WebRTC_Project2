@@ -66,7 +66,7 @@ ${user.username}
 <span>${user.address}
                     </span>
 </div>
-<div class="user-acccept-contact-received" data-uid="${user.id}">
+<div class="user-approve-request-contact-received" data-uid="${user.id}">
 Chấp nhận
 </div>
 <div class="user-reject-request-contact-received
@@ -78,4 +78,5 @@ Xóa yêu cầu
     `;
     $("#request-contact-received").find("ul").prepend(userInfoHTML)
     removeRequestContactReceived()
+    approveRequestContactReceived()
 });

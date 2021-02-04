@@ -12,3 +12,5 @@
  + Hiên thị dữ liệu thì dùng `get->html(data)` vào để hiện dữ liệu ra
  + Xoá, put dữ liệu thì gọi đến `$.ajax` ở phía server dùng phương thức delete, put
  + Post dữ liệu thì `post` bình thường, nếu cần đến id thì `uid` là xong 
+ - note 3: 
+ + nModified
