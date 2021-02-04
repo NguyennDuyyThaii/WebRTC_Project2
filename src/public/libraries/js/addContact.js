@@ -20,7 +20,7 @@ function addContact() {
                 $("#find-user")
                     .find(`div.user-remove-request-contact-sent[data-uid=${targetId}]`)
                     .css("display", "inline-block");
-
+                increaseNumberNotification("noti_contact_counter", 1);
                 increaseNumberNotifiContact("count-request-contact-sent");
 
                 let userInfoHTML = $("#find-user")
@@ -28,7 +28,8 @@ function addContact() {
                     .get(0).outerHTML;
                 $("#request-contact-sent").find("ul").prepend(userInfoHTML);
                 removeRequestContactSent()
-                    // actice realtime
+
+                // actice realtime
                 socket.emit("add-new-contact", { contactId: targetId });
             }
         });
@@ -76,4 +77,5 @@ Xóa yêu cầu
 </li>
     `;
     $("#request-contact-received").find("ul").prepend(userInfoHTML)
+    removeRequestContactReceived()
 });

@@ -60,9 +60,10 @@ let initRouter = (app) => {
         "/contacts/read-more-received",
         contactController.getMoreContactReceived
     );
-    /**
-     * load more notifications + mark all as read
-     */
+    router.delete('/contact/remove-request-contact-received', contactController.removeRequestContactReceived)
+        /**
+         * load more notifications + mark all as read
+         */
     router.get("/notification/read-more", notificationController.getMoreNotifi);
     router.put(
         "/notification/mark-all-as-read",

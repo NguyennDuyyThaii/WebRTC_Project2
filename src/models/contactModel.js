@@ -161,6 +161,12 @@ contactSchema.statics = {
             .limit(limit)
             .exec();
     },
+    /**
+     * 
+     * @param {*} userId 
+     * @param {*} skip 
+     * @param {*} limit 
+     */
     readMoreContactSent(userId, skip, limit) {
         return this.find({
                 $and: [{ "contactId": userId }, { "status": false }],
@@ -168,6 +174,16 @@ contactSchema.statics = {
             .skip(skip)
             .limit(limit)
             .exec();
+    },
+    /**
+     * 
+     * @param {*} userId 
+     * @param {*} contactId 
+     */
+    removeRequestContactReceived(userId, contactId) {
+        return this.deleteOne({
+            $and: [{ "contactId": userId }, { "userId": contactId }],
+        }).exec();
     }
 };
 module.exports = mongoose.model("contact", contactSchema);

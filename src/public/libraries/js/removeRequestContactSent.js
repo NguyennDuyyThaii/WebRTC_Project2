@@ -24,7 +24,7 @@ function removeRequestContactSent() {
                     $("#find-user")
                         .find(`div.user-remove-request-contact-sent[data-uid=${targetId}]`)
                         .hide();
-
+                    decreaseNumberNotification("noti_contact_counter", 1);
                     decreaseNumberNotifiContact("count-request-contact-sent");
                     // actice realtime
 
