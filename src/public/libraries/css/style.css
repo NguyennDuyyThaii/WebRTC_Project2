@@ -211,6 +211,7 @@ label:focus,
 .contactPanel .user-remove-request-contact-sent,
 .contactPanel .user-approve-request-contact-received,
 .contactPanel .user-remove-request-sent,
+.contactPanel .user-reject-request-contact-received,
 .contactPanel .user-remove-approve-request-contact-received {
     box-sizing: border-box;
     display: inline-flex;

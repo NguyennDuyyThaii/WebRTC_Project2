@@ -26,8 +26,13 @@
                                             alt="">
                                     </div>
                                     <span class="name">
-                                        <span class="group-chat-name">Group:</span>
-                                        <%=item.username %>
+                                        <span class="group-chat-name">
+                                        <% if(item.name.length > 15){ %>
+                                            <%=item.name.substr(0,12) %><span>...</span>
+                                        <%}else{ %>
+                                            <%=item.name %>
+                                        <%} %> 
+                                    </span>
                                         </span>
                                         <span class="time">Hai giờ trước</span>
                                         <span class="preview">Chào cả nhóm</span>
@@ -61,7 +66,11 @@
                                 <img src="/images/users/<%=item.avatar %>" alt="">
                             </div>
                             <span class="name">
-                                                        <%=item.username %>
+                                <% if(item.username.length > 15){ %>
+                                    <%=item.username.substr(0,12) %><span>...</span>
+                                <%}else{ %>
+                                    <%=item.username %>
+                                <%} %> 
                                                     </span>
                             <span class="time">Một phút
                                                         trước</span>
@@ -86,7 +95,14 @@
                                 </div>
                                 <span class="name">
                                                         <span
-                                                            class="group-chat-name">Group:</span> <%= item.username %> 
+                                                            class="group-chat-name">
+
+                                                            <% if(item.username.length > 15){ %>
+                                                                <%=item.username.substr(0,12) %><span>...</span>
+                                                            <%}else{ %>
+                                                                <%=item.username %>
+                                                            <%} %> 
+                                                            </span>
                                 </span>
                                 <span class="time">Hai giờ
                                                         trước</span>

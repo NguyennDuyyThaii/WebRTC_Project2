@@ -82,7 +82,7 @@ contactSchema.statics = {
                     { status: true },
                 ],
             })
-            .sort({ "createdAt": -1 })
+            .sort({ "updatedAt": -1 })
             .limit(limit)
             .exec();
     },
@@ -213,7 +213,7 @@ contactSchema.statics = {
                 { "userId": contactId },
                 { "status": false }
             ]
-        }, { "status": true }).exec()
+        }, { "status": true, "updatedAt": Date.now() }).exec()
     }
 };
 module.exports = mongoose.model("contact", contactSchema);
