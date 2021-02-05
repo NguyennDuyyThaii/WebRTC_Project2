@@ -101,9 +101,9 @@
                                                                                     contacts.forEach(item=>
                                                                                     {
                                                                                     %>
-                                    <li class="_contactList" data-uid="<%=item._id
-                                                                                        %>
-                                                                                        ">
+                                    <li class="_contactList" data-uid="<%=item._id%> ">
+
+
                                         <div class="contactPanel">
                                             <div class="user-avatar">
                                                 <img src="images/users/<%=item.avatar
@@ -130,11 +130,10 @@
                                                                                                         ">
                                                 Trò chuyện
                                             </div>
-                                            <div class="user-remove-contact
-                                                                                                        action-danger" data-uid="<%=
-                                                                                                        item._id
-                                                                                                        %>
-                                                                                                        ">
+                                            <div class="user-remove-contact action-danger" data-uid="<%= item._id%>">
+
+
+
                                                 Xóa liên hệ
                                             </div>
                                         </div>

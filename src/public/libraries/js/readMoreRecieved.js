@@ -1,5 +1,3 @@
-const { removeRequestContactReceived } = require("../../../services/site/contactService")
-
 $(document).ready(function() {
     $("#link-read-more-contacts-received").bind("click", function() {
         let skipNumber = $("#request-contact-received").find("li").length
