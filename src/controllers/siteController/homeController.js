@@ -1,4 +1,4 @@
-const { notificationService, contactService } = require("./../../services/site/index");
+const { notificationService, contactService, messageService } = require("./../../services/site/index");
 
 let getHome = async(req, res) => {
     // Only 10 items one time
@@ -18,6 +18,12 @@ let getHome = async(req, res) => {
     let countAllContacts = await contactService.countAllContacts(req.user._id)
     let countAllContactsSent = await contactService.countAllContactsSent(req.user._id)
     let countAllContactsReceived = await contactService.countAllContactsReceived(req.user._id)
+
+    let getAllConversationItems = await messageService.getAllConversationItems(req.user._id)
+
+    let allConversations = getAllConversationItems.allConversations
+    let userConversations = getAllConversationItems.userConversations
+    let groupConversations = getAllConversationItems.groupConversations
     return res.render("main/home/home", {
         notifocations: notifocations,
         countNotifUnread: countNotifUnread,
@@ -26,7 +32,11 @@ let getHome = async(req, res) => {
         contactsReceived: contactsReceived,
         countAllContactsReceived: countAllContactsReceived,
         countAllContactsSent: countAllContactsSent,
-        countAllContacts: countAllContacts
+        countAllContacts: countAllContacts,
+        getAllConversationItems: getAllConversationItems,
+        allConversations: allConversations,
+        userConversations: userConversations,
+        groupConversations: groupConversations
     });
 };
 module.exports = {
