@@ -6,7 +6,7 @@
                     <div class="top">
                         <span>To: <span class="name"><%= item.name %> </span></span>
                         <span class="chat-menu-right">
-                            <a href="#attachsModal" id="show-attachs" data-toggle="modal">
+                            <a href="#attachsModal_<%= item._id %>" class="show-attachs" data-toggle="modal">
                                 Tệp đính kèm
                                 <i class="fa fa-paperclip"></i>
                             </a>
@@ -15,7 +15,7 @@
                             <a href="javascript:void(0)">&nbsp;</a>
                         </span>
                         <span class="chat-menu-right">
-                            <a href="#imagesModal" id="show-images" data-toggle="modal">
+                            <a href="#imagesModal_<%=item._id  %>" class="show-images" data-toggle="modal">
                                 Hình ảnh
                                 <i class="fa fa-photo"></i>
                             </a>
@@ -76,7 +76,7 @@
                         <div class="top">
                             <span>To: <span class="name"><%= item.username %> </span></span>
                             <span class="chat-menu-right">
-                                <a href="#attachsModal" id="show-attachs" data-toggle="modal">
+                                <a href="#attachsModal_<%= item._id %>" class="show-attachs" data-toggle="modal">
                                     Tệp đính kèm
                                     <i class="fa fa-paperclip"></i>
                                 </a>
@@ -85,7 +85,7 @@
                                 <a href="javascript:void(0)">&nbsp;</a>
                             </span>
                             <span class="chat-menu-right">
-                                <a href="#imagesModal" id="show-images" data-toggle="modal">
+                                <a href="#imagesModal_<%=item._id  %>" class="show-images" data-toggle="modal">
                                     Hình ảnh
                                     <i class="fa fa-photo"></i>
                                 </a>
@@ -96,16 +96,19 @@
                                 <% item.messages.forEach(message => { %>
                                     <% if(message.messageType === "text"){ %>
                                         <div class="bubble <% if(message.senderId === user._id){ %>me <% }else{ %>you<%} %>  " data-mess-id="<%= message._id %> ">
+                                            <img src="images/users/<%= message.sender.avatar %> " alt="" class="avatar-small">
                                             <%= message.text %>
                                         </div>
                                         <%} %>
                                             <% if(message.messageType === "image"){ %>
                                                 <div class="bubble <% if(message.senderId === user._id){ %>me <% }else{ %>you<%} %> bubble-image-file" data-mess-id="<%=message._id  %>">
+                                                    <img src="/images/users/<%= message.sender.avatar %> " alt="" class="avatar-small">
                                                     <img src="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>  " class="show-image-chat">
                                                 </div>
                                                 <%} %>
                                                     <% if(message.messageType === "file"){ %>
                                                         <div class="bubble <% if(message.senderId === user._id){ %>me <% }else{ %>you<%} %> bubble-image-file" data-mess-id="<%=message._id  %>">
+                                                            <img src="/images/users/<%= message.sender.avatar %> " alt="" class="avatar-small">
                                                             <a href="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>" download="<%= message.file.filename %> ">
                                                                 <%= message.file.filename  %>
                                                             </a>

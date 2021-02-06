@@ -56,7 +56,7 @@ UserSchema.statics = {
      * find a user by id
      */
     findUserById(id) {
-        return this.findById(id).exec();
+        return this.findById(id, { "local.password": 0 }).exec();
     },
     /**
      * find all user not friend to add contact
