@@ -1,5 +1,5 @@
 const { notificationService, contactService, messageService } = require("./../../services/site/index");
-const { bufferToBase64 } = require("./../../helpers/clientHelper")
+const { bufferToBase64, lastItemOfArray, convertTime } = require("./../../helpers/clientHelper")
 let getHome = async(req, res) => {
     // Only 10 items one time
     let notifocations = await notificationService.getNotification(req.user._id);
@@ -21,9 +21,9 @@ let getHome = async(req, res) => {
 
     let getAllConversationItems = await messageService.getAllConversationItems(req.user._id)
 
-    let allConversations = getAllConversationItems.allConversations
-    let userConversations = getAllConversationItems.userConversations
-    let groupConversations = getAllConversationItems.groupConversations
+    // let allConversations = getAllConversationItems.allConversations
+    // let userConversations = getAllConversationItems.userConversations
+    // let groupConversations = getAllConversationItems.groupConversations
     let allConversationsWithMesage = getAllConversationItems.allConversationsWithMesage
     return res.render("main/home/home", {
         notifocations: notifocations,
@@ -35,12 +35,12 @@ let getHome = async(req, res) => {
         countAllContactsSent: countAllContactsSent,
         countAllContacts: countAllContacts,
         getAllConversationItems: getAllConversationItems,
-        allConversations: allConversations,
-        userConversations: userConversations,
-        groupConversations: groupConversations,
+
         allConversationsWithMesage: allConversationsWithMesage,
         user: req.user,
-        bufferToBase64: bufferToBase64
+        bufferToBase64: bufferToBase64,
+        lastItemOfArray: lastItemOfArray,
+        convertTime: convertTime
     });
 };
 module.exports = {
