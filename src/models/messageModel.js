@@ -41,6 +41,9 @@ messageSchema.statics = {
                 }
             ]
         }).sort({ "createdAt": 1 }).limit(limit).exec()
+    },
+    getMessagesInGroup(receiverId, limit) {
+        return this.find({ "receiverId": receiverId }).sort({ "createdAt": 1 }).limit(limit).exec()
     }
 }
 const MESSAGE_CONVERSATION_TYPE = {
