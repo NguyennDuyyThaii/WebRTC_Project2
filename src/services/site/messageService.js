@@ -3,6 +3,8 @@ const userModel = require('./../../models/userModel')
 const chatGroupModel = require('./../../models/chatGroupModel')
 const _ = require("lodash")
 const LIMIT_NUMBER_TAKEN = 150
+const LIMIT_MESSAGE_TAKEN = 30
+const messageModel = require('./../../models/messageModel')
 let getAllConversationItems = (currentUserId) => {
     return new Promise(async(resolve, reject) => {
         try {
@@ -29,10 +31,27 @@ let getAllConversationItems = (currentUserId) => {
             allConversations = _.sortBy(allConversations, (item) => {
                 return -item.updatedAt
             })
+
+
+            // get message to apply in screen chat
+            let allConversationsWithMesagePromise = allConversations.map(async(item) => {
+                let getMessages = await messageModel.model.getMessages(currentUserId, item._id, LIMIT_MESSAGE_TAKEN)
+
+                item = item.toObject()
+                item.messages = getMessages
+                return item
+            })
+            let allConversationsWithMesage = await Promise.all(allConversationsWithMesagePromise)
+                // avoid sort not right createdAt
+            allConversationsWithMesage = _.sortBy(allConversationsWithMesage, (item) => {
+                return -item.updatedAt
+            })
+
             resolve({
                 userConversations: userConversations,
                 groupConversations: groupConversations,
-                allConversations: allConversations
+                allConversations: allConversations,
+                allConversationsWithMesage: allConversationsWithMesage
             })
         } catch (error) {
             reject(error);

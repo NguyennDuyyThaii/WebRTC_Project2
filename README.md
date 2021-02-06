@@ -14,3 +14,4 @@
  + Post dữ liệu thì `post` bình thường, nếu cần đến id thì `uid` là xong 
  - note 3: 
  + nModified
+ + dùng map mà còn sử dụng async/await trong nó thì để chạy được thằng map đó thì dùng await Promise.all nhé

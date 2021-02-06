@@ -16,12 +16,12 @@
                 <ul class="people no-padding-start">
                     <% allConversations.forEach(item=> { %>
                         <% if(item.members){ %>
-                            <a href="#uid_<%=item._id %> " class="room-chat">
+                            <a href="#uid_<%=item._id %> " class="room-chat" data-target="#to_<%=item._id %>">
                                 <li class="person group-chat" data-chat="<%=item._id
                                     %>">
                                     <div class="left-avatar">
                                         <!-- <div class="dot"></div> -->
-                                        <img
+                                         <img
                                             src="/images/users/<%= item.avatar %> "
                                             alt="">
                                     </div>
@@ -39,7 +39,7 @@
                                     </li>
                                 </a>
                             <%}else{ %>
-                                <a href="#uid_<%=item._id  %> " class="room-chat">
+                                <a href="#uid_<%=item._id  %> " class="room-chat" data-target="#to_<%=item._id %>">
                                     <li class="person" data-chat="<%=item._id  %> ">
                                         <div class="left-avatar">
                                             <div class="dot"></div>
@@ -59,7 +59,7 @@
             <div class="tab-pane" id="user-chat">
                 <ul class="people no-padding-start">
                     <% userConversations.forEach(item => { %>
-                        <a href="#uid_<%=item._id %>" class="room-chat">
+                        <a href="#uid_<%=item._id %>" class="room-chat" data-target="#to_<%=item._id %>">
                         <li class="person" data-chat="<%=item._id %>">
                             <div class="left-avatar">
                                 <div class="dot"></div>
@@ -87,7 +87,7 @@
                 <ul class="people no-padding-start">
 
                     <% groupConversations.forEach(item => {  %>
-                        <a href="#uid_<%=item._id  %> " class="room-chat">
+                        <a href="#uid_<%=item._id  %> " class="room-chat" data-target="#to_<%=item._id %>">
                             <li class="person group-chat" data-chat="<%=item._id  %> " class="room-chat">
                                 <div class="left-avatar">
                                     <!-- <div class="dot"></div> -->
