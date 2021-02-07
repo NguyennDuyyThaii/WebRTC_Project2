@@ -13,7 +13,7 @@ let convertTime = (time) => {
     if (!time) {
         return ""
     }
-    return moment(time).locale("vi").startOf("seconds").fromNow()
+    //return moment(time).locale("vi").startOf("seconds").fromNow()
 }
 module.exports = {
     bufferToBase64: bufferToBase64,

@@ -65,6 +65,63 @@ let getAllConversationItems = (currentUserId) => {
     })
 }
 
+let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            if (isChatGroup) {
+                let getChatGroupReceiver = await chatGroupModel.getChatGroupById(receiverId)
+                if (!getChatGroupReceiver) {
+                    return reject("Không tồn tại cuộc trò chuyện")
+                }
+                let receiver = {
+                    id: getChatGroupReceiver._id,
+                    name: getChatGroupReceiver.name,
+                    avatar: "group-avatar-trungquandev.png"
+                }
+                let newMessageItem = {
+                    senderId: sender.id,
+                    receiverId: receiver.id,
+                    conversationType: messageModel.conversationType.GROUP,
+                    messageType: messageModel.messageType.TEXT,
+                    sender: sender,
+                    receiver: receiver,
+                    text: messageVal,
+                    createdAt: Date.now(),
+                }
+                let newMessage = await messageModel.model.createNew(newMessageItem)
+                await chatGroupModel.updateWhenHasNewMessage(getChatGroupReceiver._id, getChatGroupReceiver.messageAmount + 1)
+                resolve(newMessage)
+            } else {
+                let getChatUserReceiver = await userModel.getNormalUserById(receiverId)
+                if (!getChatUserReceiver) {
+                    return reject("Không tồn tại cuộc trò chuyện")
+                }
+                let receiver = {
+                    id: getChatUserReceiver._id,
+                    name: getChatUserReceiver.username,
+                    avatar: getChatUserReceiver.avatar
+                }
+                let newMessageItem = {
+                    senderId: sender.id,
+                    receiverId: receiver.id,
+                    conversationType: messageModel.conversationType.PERSONAL,
+                    messageType: messageModel.messageType.TEXT,
+                    sender: sender,
+                    receiver: receiver,
+                    text: messageVal,
+                    createdAt: Date.now(),
+                }
+                let newMessage = await messageModel.model.createNew(newMessageItem)
+                await contactModel.updateWhenHasNewMessage(sender.id, getChatUserReceiver._id)
+                resolve(newMessage)
+            }
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 module.exports = {
-    getAllConversationItems: getAllConversationItems
+    getAllConversationItems: getAllConversationItems,
+    addNewTextEmoji: addNewTextEmoji
 }

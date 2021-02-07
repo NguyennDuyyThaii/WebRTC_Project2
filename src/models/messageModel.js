@@ -24,7 +24,9 @@ let messageSchema = new Schema({
     deletedAt: { type: String, default: null }
 })
 messageSchema.statics = {
-
+    createNew(item) {
+        return this.create(item);
+    },
     getMessages(senderId, receiverId, limit) {
         return this.find({
             $or: [{

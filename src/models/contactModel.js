@@ -214,6 +214,22 @@ contactSchema.statics = {
                 { "status": false }
             ]
         }, { "status": true, "updatedAt": Date.now() }).exec()
+    },
+    /**
+     * 
+     * @param {*} userId 
+     * @param {*} contactId 
+     */
+    updateWhenHasNewMessage(userId, contactId) {
+        return this.updateOne({
+            $or: [{
+                    $and: [{ "userId": userId }, { "contactId": contactId }, { "status": true }],
+                },
+                {
+                    $and: [{ "userId": contactId }, { "contactId": userId }, { "status": true }],
+                },
+            ]
+        }, { "updatedAt": Date.now() }).exec()
     }
 };
 module.exports = mongoose.model("contact", contactSchema);

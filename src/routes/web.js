@@ -2,11 +2,15 @@ const { register, login } = require("./../controllers/authController/index");
 const {
     registerValidation,
 } = require("./../validations/auth/registerValidation");
+const {
+    messageValidation
+} = require("./../validations/index")
 const initPassportLocal = require("./../controllers/passportController/local");
 const {
     homeController,
     contactController,
     notificationController,
+    messageController
 } = require("./../controllers/siteController/index");
 /**
  * config libraly
@@ -71,6 +75,10 @@ let initRouter = (app) => {
         "/notification/mark-all-as-read",
         notificationController.markAllAsRead
     );
+    /**
+     * 
+     */
+    router.post('/message/add-new-text-emoji', messageValidation.checkMessageLength, messageController.addNewTextEmoji)
 
     return app.use("/", router);
 };
