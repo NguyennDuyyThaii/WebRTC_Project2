@@ -51,8 +51,8 @@
                                     </li>
                                 </a>
                             <%}else{ %>
-                                <a href="#uid_<%=item._id  %> " class="room-chat" data-target="#to_<%=item._id %>">
-                                    <li class="person" data-chat="<%=item._id  %> ">
+                                <a href="#uid_<%=item._id  %>" class="room-chat" data-target="#to_<%=item._id %>">
+                                    <li class="person" data-chat="<%=item._id  %>">
                                         <div class="left-avatar">
                                             <div class="dot"></div>
                                             <img src="/images/users/<%= item.avatar %> " alt="">
@@ -128,10 +128,10 @@
                     <% allConversationsWithMesage.forEach(item => {  %>
                         <% if(item.members){ %>
                             <a href="#uid_<%=item._id  %> " class="room-chat" data-target="#to_<%=item._id %>">
-                                <li class="person group-chat" data-chat="<%=item._id  %> " class="room-chat">
+                                <li class="person group-chat" data-chat="<%=item._id%>" class="room-chat">
                                     <div class="left-avatar">
                                         <!-- <div class="dot"></div> -->
-                                        <img src="/images/users/<%= item.avatar %> " alt="">
+                                        <img src="/images/users/<%= item.avatar %>"alt="">
                                     </div>
                                     <span class="name">
                                                             <span

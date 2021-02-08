@@ -40,10 +40,10 @@ let getAllConversationItems = (currentUserId) => {
 
                 if (item.members) {
                     let getMessages = await messageModel.model.getMessagesInGroup(item._id, LIMIT_MESSAGE_TAKEN)
-                    item.messages = getMessages
+                    item.messages = _.reverse(getMessages)
                 } else {
                     let getMessages = await messageModel.model.getMessages(currentUserId, item._id, LIMIT_MESSAGE_TAKEN)
-                    item.messages = getMessages
+                    item.messages = _.reverse(getMessages)
                 }
                 return item
             })

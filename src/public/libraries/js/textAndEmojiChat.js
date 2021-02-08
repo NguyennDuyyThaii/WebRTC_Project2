@@ -17,7 +17,38 @@ function textAndEmojiChat(divId) {
             }
 
             $.post('/message/add-new-text-emoji', dataTextEmojiForSent, function(data) {
-                console.log(data.message)
+                let messageOfMe = $(`<div class="bubble me"
+                 data-mess-id="${data.message._id}">
+            </div>`)
+                if (dataTextEmojiForSent.isChatGroup) {
+                    messageOfMe.html(`
+                    <img src="/images/users/${data.message.sender.avatar}" 
+                    alt="" class="avatar-small" title="${data.message.sender.name}">
+                    `)
+                    messageOfMe.text(data.message.text)
+                    increaseNumberMessageGroup(divId)
+                } else {
+                    messageOfMe.text(data.message.text)
+                }
+                $(`.right .chat[data-chat=${divId}]`).append(messageOfMe)
+                nineScrollRight(divId)
+
+                //step 3
+                $(`#write-chat-${divId}`).val("")
+                $(".emojionearea").find(".emojionearea-editor").text("")
+
+
+                //step 4
+                //$(`.person[data-chat=${divId}]`).find("span.time").html(moment(data.message.createdAt).locale("vi").startOf("seconds").fromNow())
+                $(`.person[data-chat=${divId}]`).find("span.preview").text(data.message.text)
+
+                //step 5: move new conversation to the top
+                $(`.person[data-chat=${divId}]`).on("click.moveConversationToTop", function() {
+                    let dataToMove = $(this).parent()
+                    $(this).closest("ul").prepend(dataToMove)
+                    $(this).off("click.moveConversationToTop")
+                })
+                $(`.person[data-chat=${divId}]`).click()
             }).fail(function(response) {
                 alertify.notify(response.responseText, "error", 7)
             })
