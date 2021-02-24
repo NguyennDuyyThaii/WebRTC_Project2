@@ -16,13 +16,12 @@
                 <ul class="people no-padding-start">
                     <% allConversationsWithMesage.forEach(item=> { %>
                         <% if(item.members){ %>
-                            <a href="#uid_<%=item._id %> " class="room-chat" data-target="#to_<%=item._id %>">
-                                <li class="person group-chat" data-chat="<%=item._id
-                                    %>">
+                            <a href="#uid_<%=item._id %>" class="room-chat" data-target="#to_<%=item._id %>">
+                                <li class="person group-chat" data-chat="<%=item._id%>">
                                     <div class="left-avatar">
                                         <!-- <div class="dot"></div> -->
                                          <img
-                                            src="/images/users/<%= item.avatar %> "
+                                            src="/images/users/<%= item.avatar %>"
                                             alt="">
                                     </div>
                                     <span class="name">
@@ -58,7 +57,12 @@
                                             <img src="/images/users/<%= item.avatar %> " alt="">
                                         </div>
                                         <span class="name">
-                                                <%= item.username %> 
+                                               
+                                            <% if(item.username.length > 15){ %>
+                                                <%=item.username.substr(0,12) %><span>...</span>
+                                            <%}else{ %>
+                                                <%=item.username %>
+                                            <%} %> 
                                             </span>
                                         <span class="time">
                                             <%=convertTime(lastItemOfArray(item.messages).createdAt)  %> 
@@ -137,10 +141,10 @@
                                                             <span
                                                                 class="group-chat-name">
     
-                                                                <% if(item.username.length > 15){ %>
-                                                                    <%=item.username.substr(0,12) %><span>...</span>
+                                                                <% if(item.name.length > 15){ %>
+                                                                    <%=item.name.substr(0,12) %><span>...</span>
                                                                 <%}else{ %>
-                                                                    <%=item.username %>
+                                                                    <%=item.name %>
                                                                 <%} %> 
                                                                 </span>
                                     </span>

@@ -9,12 +9,12 @@ let messageSchema = new Schema({
     messageType: String,
     sender: {
         id: String,
-        username: String,
+        name: String,
         avatar: String
     },
     receiver: {
         id: String,
-        username: String,
+        name: String,
         avatar: String
     },
     text: String,
@@ -27,7 +27,7 @@ messageSchema.statics = {
     createNew(item) {
         return this.create(item);
     },
-    getMessages(senderId, receiverId, limit) {
+    getMessagesInPersonal(senderId, receiverId, limit) {
         return this.find({
             $or: [{
                     $and: [
@@ -37,8 +37,8 @@ messageSchema.statics = {
                 },
                 {
                     $and: [
-                        { "senderId": receiverId },
-                        { "receiverId": senderId }
+                        { "receiverId": senderId },
+                        { "senderId": receiverId }
                     ]
                 }
             ]

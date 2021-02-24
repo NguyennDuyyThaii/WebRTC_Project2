@@ -93,22 +93,16 @@
                             </ul>
                         </div>
                     </div>
-                    <div id="contacts" class="tab-pane
-                                                                        fade">
+                    <div id="contacts" class="tab-pane fade">
                         <div class="find-user-bottom">
                             <ul class="contactList">
-                                <%
-                                                                                    contacts.forEach(item=>
-                                                                                    {
-                                                                                    %>
-                                    <li class="_contactList" data-uid="<%=item._id%> ">
+                                <% contacts.forEach(item=>{%>
+                                    <li class="_contactList" data-uid="<%=item._id%>">
 
 
                                         <div class="contactPanel">
                                             <div class="user-avatar">
-                                                <img src="images/users/<%=item.avatar
-                                                                                                    %>
-                                                                                                " alt="">
+                                                <img src="images/users/<%=item.avatar%>" alt="">
                                             </div>
                                             <div class="user-name">
                                                 <p>
@@ -124,22 +118,15 @@
                                                                                                             %>
                                                                                                         </span>
                                             </div>
-                                            <div class="user-talk" data-uid="<%=
-                                                                                                        item._id
-                                                                                                        %>
-                                                                                                        ">
+                                            <div class="user-talk" data-uid="<%=item._id%>">
                                                 Trò chuyện
                                             </div>
                                             <div class="user-remove-contact action-danger" data-uid="<%= item._id%>">
-
-
-
                                                 Xóa liên hệ
                                             </div>
                                         </div>
                                     </li>
-                                    <%});
-                                                                                                %>
+                                    <%}); %>
                             </ul>
                             <hr>
                             <div class="read-more-contacts">
@@ -156,17 +143,11 @@
                                                                                         fade">
                         <div class="find-user-bottom">
                             <ul class="contactList">
-                                <%
-                                                                                                    contactsSent.forEach(item=>
-                                                                                                    {
-                                                                                                    %>
+                                <% contactsSent.forEach(item=> {%>
                                     <li class="_contactList" data-uid="<%=item._id%>">
                                         <div class="contactPanel">
                                             <div class="user-avatar">
-                                                <img src="images/users/<%=
-                                                                                                                    item.avatar
-                                                                                                                    %>
-                                                                                                                " alt="">
+                                                <img src="images/users/<%=item.avatar%>" alt="">
                                             </div>
                                             <div class="user-name">
                                                 <p>
@@ -182,14 +163,12 @@
                                                                                                                             %>
                                                                                                                         </span>
                                             </div>
-                                            <div class="user-remove-request-contact-sent display-importaint
-                                                                                                                        action-danger" data-uid="<%=item._id%>">
+                                            <div class="user-remove-request-contact-sent display-importaint action-danger" data-uid="<%=item._id%>">
                                                 Hủy yêu cầu
                                             </div>
                                         </div>
                                     </li>
-                                    <%})
-                                                                                                                %>
+                                    <%}); %>
                             </ul>
                             <hr>
                             <div class="read-more-contacts-sent">
@@ -255,9 +234,7 @@
                             </ul>
                             <hr>
                             <div class="read-more-contacts-received">
-                                <a href="javascript:void(0)" id="link-read-more-contacts-received"><strong>Xem
-                                                                                                                                        thêm
-                                                                                                                                        10
+                                <a href="javascript:void(0)" id="link-read-more-contacts-received"><strong>Xem thêm 10
                                                                                                                                         yêu
                                                                                                                                         cầu
                                                                                                                                         kết

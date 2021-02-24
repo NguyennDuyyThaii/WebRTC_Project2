@@ -11,8 +11,7 @@ function decreaseNumberNotifiContact(className) {
 
 function removeContact() {
     $(".user-remove-contact")
-        .unbind("click")
-        .on("click", function() {
+        .bind("click", function() {
             let targetId = $(this).data("uid");
             let username = $(this).parent().find("div.user-name p").text();
             Swal.fire({

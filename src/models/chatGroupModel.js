@@ -37,6 +37,12 @@ chatGroupSchema.statics = {
             "messageAmount": newMessageAmount,
             "updatedAt": Date.now()
         }).exec()
+    },
+
+    getChatGroupIdByUser(userId) {
+        return this.find({
+            "members": { $elemMatch: { "userId": userId } }
+        }, { _id: 1 }).exec()
     }
 }
 module.exports = mongoose.model("chatgroup", chatGroupSchema)

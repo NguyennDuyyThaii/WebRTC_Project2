@@ -10,8 +10,7 @@ $(document).ready(function() {
             }
             // 
             contacts.forEach(function(item) {
-                $("#request-contact-received").find("ul").append(
-                    `
+                $("#request-contact-received").find("ul").append(`
                     <li class="_contactList" data-uid="
                                                                                                                         ${item._id}
                                                                                                                      ">
@@ -53,6 +52,9 @@ $(document).ready(function() {
             })
             approveRequestContactReceived()
             removeRequestContactReceived()
+
+            $("#link-read-more-contacts-received").css("display", "inline-block")
+            $(".read-more-contacts-received-loader").css("display", "none");
         })
     })
 })

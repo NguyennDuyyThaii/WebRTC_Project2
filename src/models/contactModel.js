@@ -79,8 +79,8 @@ contactSchema.statics = {
                 $and: [{
                         $or: [{ "userId": userId }, { "contactId": userId }],
                     },
-                    { status: true },
-                ],
+                    { "status": true },
+                ]
             })
             .sort({ "updatedAt": -1 })
             .limit(limit)
@@ -223,11 +223,19 @@ contactSchema.statics = {
     updateWhenHasNewMessage(userId, contactId) {
         return this.updateOne({
             $or: [{
-                    $and: [{ "userId": userId }, { "contactId": contactId }, { "status": true }],
+                    $and: [
+                        { "userId": userId },
+                        { "contactId": contactId },
+                        { "status": true }
+                    ]
                 },
                 {
-                    $and: [{ "userId": contactId }, { "contactId": userId }, { "status": true }],
-                },
+                    $and: [
+                        { "userId": contactId },
+                        { "contactId": userId },
+                        { "status": true }
+                    ]
+                }
             ]
         }, { "updatedAt": Date.now() }).exec()
     }

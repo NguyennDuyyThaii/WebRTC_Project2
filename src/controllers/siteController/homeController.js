@@ -35,7 +35,6 @@ let getHome = async(req, res) => {
         countAllContactsSent: countAllContactsSent,
         countAllContacts: countAllContacts,
         getAllConversationItems: getAllConversationItems,
-
         allConversationsWithMesage: allConversationsWithMesage,
         user: req.user,
         bufferToBase64: bufferToBase64,

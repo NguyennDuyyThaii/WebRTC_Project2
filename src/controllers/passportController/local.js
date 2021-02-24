@@ -1,6 +1,7 @@
 const passport = require("passport")
 const passportLocal = require("passport-local")
 const UserModel = require("./../../models/userModel")
+const ChatGroupModel = require("./../../models/chatGroupModel")
 const { transPassport } = require("./../../../lang/vi")
 
 let localStratery = passportLocal.Strategy
@@ -10,7 +11,7 @@ let initPassportLocal = () => {
         usernameField: "email",
         passwordField: "password",
         passReqToCallback: true
-    }, async (req, email, password, done) => {
+    }, async(req, email, password, done) => {
         try {
             let user = await UserModel.findByEmail(email)
             if (!user) {
@@ -33,14 +34,19 @@ let initPassportLocal = () => {
     passport.serializeUser((user, done) => {
         done(null, user._id)
     })
-    passport.deserializeUser((id, done) => {
-        UserModel.findUserById(id)
-            .then(user => {
-                return done(null,user)
-            })
-            .catch(error => {
-                return done(error, null)
-            })
+    passport.deserializeUser(async(id, done) => {
+        try {
+            let user = await UserModel.findUserById(id)
+            let getChatGroupsId = await ChatGroupModel.getChatGroupIdByUser(user._id)
+
+            user = user.toObject()
+            user.chatGroupIds = getChatGroupsId
+
+            return done(null, user)
+        } catch (error) {
+            return done(error, null)
+        }
+
     })
 }
 

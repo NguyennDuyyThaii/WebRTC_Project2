@@ -19,7 +19,7 @@ let getAllConversationItems = (currentUserId) => {
                     getUserContact.updatedAt = item.updatedAt
                     return getUserContact
                 } else {
-                    let getUserContact = await userModel.getNormalUserById(item.userId);
+                    let getUserContact = await userModel.getNormalUserById(item.contactId);
                     // if item.createdAt is string, before assign that getUserContact = getUserContact.toObject()
                     getUserContact.updatedAt = item.updatedAt
                     return getUserContact
@@ -42,7 +42,7 @@ let getAllConversationItems = (currentUserId) => {
                     let getMessages = await messageModel.model.getMessagesInGroup(item._id, LIMIT_MESSAGE_TAKEN)
                     item.messages = _.reverse(getMessages)
                 } else {
-                    let getMessages = await messageModel.model.getMessages(currentUserId, item._id, LIMIT_MESSAGE_TAKEN)
+                    let getMessages = await messageModel.model.getMessagesInPersonal(currentUserId, item._id, LIMIT_MESSAGE_TAKEN)
                     item.messages = _.reverse(getMessages)
                 }
                 return item

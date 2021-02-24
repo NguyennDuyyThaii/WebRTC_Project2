@@ -42,6 +42,7 @@ $(document).ready(function() {
                 </li>
                 `)
             })
+            removeContact();
         })
     })
 })
