@@ -59,6 +59,16 @@ function textAndEmojiChat(divId) {
 
                 // step 6: Emit realtime
                 socket.emit("chat-text-emoji", dataToEmit)
+
+                // step 7: Emit remove typing real-time
+                typingOff(divId);
+
+                // step 8: If this has typing, remove that imeidate
+                let check = $(`.chat[data-chat=${divId}]`).find("div.bubble-typing-gif")
+                    //kiem tra neu no ton tai
+                if (check.length) {
+                    check.remove();
+                }
             }).fail(function(response) {
                 alertify.notify(response.responseText, "error", 7)
             })
@@ -107,5 +117,9 @@ $(document).ready(function() {
             $(this).off("nguyenduythai.moveConversationToTop")
         })
         $(`.person[data-chat=${divId}]`).trigger("nguyenduythai.moveConversationToTop")
+
+        //step 6
+        //step7
+        //step8
     })
 })
