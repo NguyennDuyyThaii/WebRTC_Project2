@@ -94,6 +94,9 @@ function gridPhotos(layoutNumber) {
     $(".show-images").unbind("click").on("click", function() {
         let href = $(this).attr("href");
         let modalImages = href.replace("#", "")
+
+        let originDataImage = $(`#${modalImages}`).find('div.modal-body').html()
+
         let countRows = Math.ceil($(`#${modalImages}`).find('div.all-images>img').length / layoutNumber);
         let layoutStr = new Array(countRows).fill(layoutNumber).join("");
         $(`#${modalImages}`).find('div.all-images').photosetGrid({
@@ -113,6 +116,11 @@ function gridPhotos(layoutNumber) {
                 });
             }
         });
+        // bat su kien dong modal 
+        $(`#${modalImages}`).on('hidden.bs.modal', function() {
+            $(this).find("div.modal-body").html(originDataImage)
+        })
+
     })
 
 }
