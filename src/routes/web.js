@@ -75,9 +75,10 @@ let initRouter = (app) => {
         "/notification/mark-all-as-read",
         notificationController.markAllAsRead
     );
-    /**
-     * 
-     */
+    router.post('/messages/add-new-image', messageController.addNewImage)
+        /**
+         * 
+         */
     router.post('/message/add-new-text-emoji', messageValidation.checkMessageLength, messageController.addNewTextEmoji)
 
     return app.use("/", router);

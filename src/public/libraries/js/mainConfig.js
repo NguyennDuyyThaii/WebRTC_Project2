@@ -180,6 +180,8 @@ function changeScreenChat() {
         nineScrollRight(divId);
 
         enableEmojioneArea(divId);
+
+        imageChat(divId);
     })
 }
 $(document).ready(function() {
