@@ -129,6 +129,77 @@ let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
      * @param {*} isChatGroup 
      */
 let addNewImage = (sender, receiverId, messageVal, isChatGroup) => {
+        return new Promise(async(resolve, reject) => {
+            try {
+                if (isChatGroup) {
+                    let getChatGroupReceiver = await chatGroupModel.getChatGroupById(receiverId)
+                    if (!getChatGroupReceiver) {
+                        return reject("Không tồn tại cuộc trò chuyện")
+                    }
+                    let receiver = {
+                            id: getChatGroupReceiver._id,
+                            name: getChatGroupReceiver.name,
+                            avatar: "group-avatar-trungquandev.png"
+                        }
+                        // chuyen sang buffer de luu vao database
+                    let imageBuffer = await fsExtra.readFile(messageVal.path)
+                    let imageContentType = messageVal.mimeType
+                    let imageName = messageVal.originalname
+
+                    let newMessageItem = {
+                        senderId: sender.id,
+                        receiverId: receiver.id,
+                        conversationType: messageModel.conversationType.GROUP,
+                        messageType: messageModel.messageType.IMAGE,
+                        sender: sender,
+                        receiver: receiver,
+                        file: { data: imageBuffer, contentType: imageContentType, fileName: imageName },
+                        createdAt: Date.now(),
+                    }
+                    let newMessage = await messageModel.model.createNew(newMessageItem)
+                    await chatGroupModel.updateWhenHasNewMessage(getChatGroupReceiver._id, getChatGroupReceiver.messageAmount + 1)
+                    resolve(newMessage)
+                } else {
+                    let getChatUserReceiver = await userModel.getNormalUserById(receiverId)
+                    if (!getChatUserReceiver) {
+                        return reject("Không tồn tại cuộc trò chuyện")
+                    }
+                    let receiver = {
+                        id: getChatUserReceiver._id,
+                        name: getChatUserReceiver.username,
+                        avatar: getChatUserReceiver.avatar
+                    }
+                    let imageBuffer = await fsExtra.readFile(messageVal.path)
+                    let imageContentType = messageVal.mimeType
+                    let imageName = messageVal.originalname
+                    let newMessageItem = {
+                        senderId: sender.id,
+                        receiverId: receiver.id,
+                        conversationType: messageModel.conversationType.PERSONAL,
+                        messageType: messageModel.messageType.IMAGE,
+                        sender: sender,
+                        receiver: receiver,
+                        file: { data: imageBuffer, contentType: imageContentType, fileName: imageName },
+                        createdAt: Date.now(),
+                    }
+                    let newMessage = await messageModel.model.createNew(newMessageItem)
+                    await contactModel.updateWhenHasNewMessage(sender.id, getChatUserReceiver._id)
+                    resolve(newMessage)
+                }
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+    /**
+     * 
+     * @param {*} sender 
+     * @param {*} receiverId 
+     * @param {*} messageVal 
+     * @param {*} isChatGroup 
+     * @returns 
+     */
+let addNewAttachment = (sender, receiverId, messageVal, isChatGroup) => {
     return new Promise(async(resolve, reject) => {
         try {
             if (isChatGroup) {
@@ -142,18 +213,18 @@ let addNewImage = (sender, receiverId, messageVal, isChatGroup) => {
                         avatar: "group-avatar-trungquandev.png"
                     }
                     // chuyen sang buffer de luu vao database
-                let imageBuffer = await fsExtra.readFile(messageVal.path)
-                let imageContentType = messageVal.mimeType
-                let imageName = messageVal.originalname
+                let attachmentBuffer = await fsExtra.readFile(messageVal.path)
+                let attachmentContentType = messageVal.mimeType
+                let attachmentName = messageVal.originalname
 
                 let newMessageItem = {
                     senderId: sender.id,
                     receiverId: receiver.id,
                     conversationType: messageModel.conversationType.GROUP,
-                    messageType: messageModel.messageType.IMAGE,
+                    messageType: messageModel.messageType.FILE,
                     sender: sender,
                     receiver: receiver,
-                    file: { data: imageBuffer, contentType: imageContentType, fileName: imageName },
+                    file: { data: attachmentBuffer, contentType: attachmentContentType, fileName: attachmentName },
                     createdAt: Date.now(),
                 }
                 let newMessage = await messageModel.model.createNew(newMessageItem)
@@ -169,17 +240,18 @@ let addNewImage = (sender, receiverId, messageVal, isChatGroup) => {
                     name: getChatUserReceiver.username,
                     avatar: getChatUserReceiver.avatar
                 }
-                let imageBuffer = await fsExtra.readFile(messageVal.path)
-                let imageContentType = messageVal.mimeType
-                let imageName = messageVal.originalname
+                let attachmentBuffer = await fsExtra.readFile(messageVal.path)
+                let attachmentContentType = messageVal.mimeType
+                let attachmentName = messageVal.originalname
+
                 let newMessageItem = {
                     senderId: sender.id,
                     receiverId: receiver.id,
                     conversationType: messageModel.conversationType.PERSONAL,
-                    messageType: messageModel.messageType.IMAGE,
+                    messageType: messageModel.messageType.FILE,
                     sender: sender,
                     receiver: receiver,
-                    file: { data: imageBuffer, contentType: imageContentType, fileName: imageName },
+                    file: { data: attachmentBuffer, contentType: attachmentContentType, fileName: attachmentName },
                     createdAt: Date.now(),
                 }
                 let newMessage = await messageModel.model.createNew(newMessageItem)
@@ -191,9 +263,9 @@ let addNewImage = (sender, receiverId, messageVal, isChatGroup) => {
         }
     })
 }
-
 module.exports = {
     getAllConversationItems: getAllConversationItems,
     addNewTextEmoji: addNewTextEmoji,
-    addNewImage: addNewImage
+    addNewImage: addNewImage,
+    addNewAttachment: addNewAttachment
 }

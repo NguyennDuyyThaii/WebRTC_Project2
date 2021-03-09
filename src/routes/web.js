@@ -76,6 +76,7 @@ let initRouter = (app) => {
         notificationController.markAllAsRead
     );
     router.post('/messages/add-new-image', messageController.addNewImage)
+    router.post('/messages/add-new-attachment', messageController.addNewAttachment)
         /**
          * 
          */

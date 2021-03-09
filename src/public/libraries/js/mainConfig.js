@@ -190,6 +190,8 @@ function changeScreenChat() {
         enableEmojioneArea(divId);
 
         imageChat(divId);
+
+        attachmentChat(divId);
     })
 }
 $(document).ready(function() {
