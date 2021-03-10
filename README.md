@@ -15,3 +15,8 @@
  - note 3: 
  + nModified
  + dùng map mà còn sử dụng async/await trong nó thì để chạy được thằng map đó thì dùng await Promise.all nhé
+ - note 4: 
+ + Possible EventEmitter memory leak detected. 11 disconnect listeners added to [Socket]. Use emitter.setMaxListeners() to increase limit
+ => sử dụng thằng events: events.EventEmitter.defaultMaxListeners = 30
+ + Nếu khai báo mà bị trùng tên ấy "import * as ABC from '...' " => linux
+ + const peer = new Peer({ host: 'peerjs-server.herokuapp.com', secure: true, port: 443 });

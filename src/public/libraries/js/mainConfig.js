@@ -192,6 +192,8 @@ function changeScreenChat() {
         imageChat(divId);
 
         attachmentChat(divId);
+
+        videoChat(divId)
     })
 }
 $(document).ready(function() {
@@ -228,6 +230,10 @@ $(document).ready(function() {
     changeTypeChat();
     // thay doi man hinh chat 
     changeScreenChat()
-
+        // click vao phan tu tro chuyen dau tien khi load trang
     $("ul.people").find("a")[0].click()
+
+    $("#video-chat-group").bind('click', function() {
+        alertify.notify("Không khả dụng với nhóm trò chuyện, tính năng này chúng tôi đang khắc phục", "error", 7)
+    })
 });

@@ -13,15 +13,18 @@ const socketIO = require("socket.io");
 const initSockets = require("./sockets/index");
 const cookieParser = require("cookie-parser");
 const configSocketio = require("./configs/socketio");
+const events = require("events");
 
 /**
  *
  */
 const express = require("express");
 const app = express();
-/**
- * socket io vs expressApp
- */
+
+events.EventEmitter.defaultMaxListeners = 30
+    /**
+     * socket io vs expressApp
+     */
 const server = http.createServer(app);
 const io = socketIO(server);
 /**
