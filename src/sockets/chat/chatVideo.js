@@ -10,6 +10,7 @@ let chatVideo = (io) => {
             /**
              * 
              */
+            // step 01
         socket.on("caller-check-listener-online-or-not", (data) => {
 
             if (clients[data.listenerId]) {

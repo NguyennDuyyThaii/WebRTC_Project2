@@ -20,3 +20,19 @@
  => sử dụng thằng events: events.EventEmitter.defaultMaxListeners = 30
  + Nếu khai báo mà bị trùng tên ấy "import * as ABC from '...' " => linux
  + const peer = new Peer({ host: 'peerjs-server.herokuapp.com', secure: true, port: 443 });
+ - note 5: run video stream on local 
+ + let getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia).bind(navigator);
+ + function playVideoStream(videoTagId, stream) {
+    let video = document.getElementById(videoTagId)
+    video.srcObject = stream
+
+    video.onloadeddata = function() {
+        video.play()
+    }
+    }
+ + function closeVideoStream(stream) {
+    return stream.getTracks().forEach(track => track.stop())    
+    }
+ + close modal: $("#streamModal").on("hidden.bs.modal", function() {}
+ +  if (err.toString() === "NotFoundError: Requested device not found"): error call video máy cây đó, không có camera
+ + if (err.toString() === "NotAllowedError: Permission denied") {}: error người dùng tắt truy cập camera mic đó
