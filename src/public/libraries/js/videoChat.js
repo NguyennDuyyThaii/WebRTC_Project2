@@ -31,6 +31,9 @@ $(document).ready(function() {
         alertify.notify("Người dùng này hiện không trực tuyến", "error", 7)
     })
 
+    // ice server
+    let iceServerList = $("#ice-server-list").val()
+
     let getPeerId = "";
     const peer = new Peer({
         host: 'peerjs-server.herokuapp.com',
@@ -38,9 +41,10 @@ $(document).ready(function() {
         port: 443,
         key: 'peerjs',
         //debug: 3 // log het ke ca co loi hay khong co loi
+        config: { 'iceServers': JSON.parse(iceServerList) }
 
     });
-    console.log(peer)
+    //console.log(peer)
     peer.on("open", function(peerId) {
         getPeerId = peerId
     });
