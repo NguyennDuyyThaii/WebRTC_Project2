@@ -9,6 +9,7 @@ const typingOff = require('./chat/typingOff')
 const chatImage = require('./chat/chatImage')
 const chatAttachment = require('./chat/chatAttachment')
 const chatVideo = require('./chat/chatVideo')
+const userOnOff = require("./status/userOnOff")
 let initSockets = (io) => {
     addNewContact(io)
     removeRequestContactSent(io)
@@ -21,5 +22,6 @@ let initSockets = (io) => {
     chatImage(io)
     chatAttachment(io)
     chatVideo(io)
+    userOnOff(io)
 }
 module.exports = initSockets
