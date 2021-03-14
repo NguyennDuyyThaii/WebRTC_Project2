@@ -20,6 +20,7 @@ let findUserContact = (currentUserId, keyword) => {
     });
 };
 
+
 let addNew = (currentUserId, contactId) => {
     return new Promise(async(resolve, reject) => {
         let contactExists = await contactModel.checkExists(
@@ -224,6 +225,21 @@ let removeContact = (currentUserId, contactId) => {
         resolve(true)
     })
 }
+let searchFriends = (currentUserId, keyword) => {
+    return new Promise(async(resolve, reject) => {
+        let friendsId = []
+        let friends = await contactModel.getFriends(currentUserId)
+        friends.forEach(item => {
+            friendsId.push(item.userId)
+            friendsId.push(item.contactId)
+        })
+        friendsId = _.uniqBy(friendsId)
+            // loc bo chinh no
+        friendsId = friendsId.filter(item => item != currentUserId)
+        let users = await userModel.findAllToAddGroupChat(friendsId, keyword)
+        resolve(users)
+    });
+};
 module.exports = {
     findUserContact: findUserContact,
     addNew: addNew,
@@ -239,5 +255,6 @@ module.exports = {
     getMoreContactReceived: getMoreContactReceived,
     removeRequestContactReceived: removeRequestContactReceived,
     approveRequestContactReceived: approveRequestContactReceived,
-    removeContact: removeContact
+    removeContact: removeContact,
+    searchFriends: searchFriends
 };

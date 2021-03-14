@@ -66,12 +66,12 @@ UserSchema.statics = {
     findAllForAddContact(deprecatedUserId, keyword) {
         return this.find({
             $and: [
-                { _id: { $nin: deprecatedUserId } },
+                { "_id": { $nin: deprecatedUserId } },
                 { "local.isActive": true },
                 {
                     $or: [
-                        { username: { $regex: new RegExp(keyword, "i") } },
-                        { "local.email": { $regex: new RegExp(keyword, "i") } },
+                        { "username": { "$regex": new RegExp(keyword, "i") } },
+                        { "local.email": { "$regex": new RegExp(keyword, "i") } },
                     ],
                 },
             ],
@@ -84,6 +84,24 @@ UserSchema.statics = {
     getNormalUserById(id) {
         return this.findById(id, { _id: 1, username: 1, address: 1, avatar: 1 }).exec();
     },
+    /**
+     * 
+     * @returns 
+     */
+    findAllToAddGroupChat(friendsId, keyword) {
+        return this.find({
+            $and: [
+                { "_id": { $in: friendsId } },
+                { "local.isActive": true },
+                {
+                    $or: [
+                        { "username": { "$regex": new RegExp(keyword, "i") } },
+                        { "local.email": { "$regex": new RegExp(keyword, "i") } },
+                    ],
+                },
+            ],
+        }, { _id: 1, username: 1, address: 1, avatar: 1 }).exec();
+    }
 };
 UserSchema.methods = {
     comparePassword(password) {

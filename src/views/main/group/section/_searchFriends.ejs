@@ -1,0 +1,23 @@
+<% users.forEach(function(item){ %>
+    <div data-uid="<%= item._id %>">
+        <li data-uid="<%= item._id %>">
+            <div class="contactPanel">
+                <div class="user-avatar">
+                    <img src="../../libraries/images/users/<%= item.avatar %>" alt="">
+                </div>
+                <div class="user-name">
+                    <p>
+                        <%= item.username %>
+                    </p>
+                </div>
+                <br>
+                <div class="user-address">
+                    <span>&nbsp <%= item.address %></span>
+                </div>
+                <div class="add-user" data-uid="<%= item._id %>">
+                    Thêm vào nhóm
+                </div>
+            </div>
+        </li>
+    </div>
+    <%}) %>

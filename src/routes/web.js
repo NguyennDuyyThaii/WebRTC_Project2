@@ -1,9 +1,10 @@
 const { register, login } = require("./../controllers/authController/index");
 const {
-    registerValidation,
+    registerValidation
 } = require("./../validations/auth/registerValidation");
 const {
-    messageValidation
+    messageValidation,
+    contactValidation
 } = require("./../validations/index")
 const initPassportLocal = require("./../controllers/passportController/local");
 const {
@@ -80,6 +81,9 @@ let initRouter = (app) => {
         /**
          * 
          */
+        // chat-group
+    router.get("/contact/search-friend/:keyword", contactValidation.searchFriends, contactController.searchFriends);
+
     router.post('/message/add-new-text-emoji', messageValidation.checkMessageLength, messageController.addNewTextEmoji)
 
     return app.use("/", router);

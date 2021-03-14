@@ -1,5 +1,16 @@
 const { contactService } = require("./../../services/site/index")
+const { validationResult } = require("express-validator")
 let findUserContact = async(req, res) => {
+    let errorArr = []
+    let validationErrors = validationResult(req)
+
+    if (!validationErrors.isEmpty()) {
+        let errors = Object.values(validationErrors.mapped())
+        errors.forEach(item => {
+            errorArr.push(item.msg)
+        })
+        return res.status(500).send(errorArr)
+    }
     try {
         let currentUserId = req.user._id // session
         let keyword = req.params.keyword
@@ -93,6 +104,27 @@ let removeContact = async(req, res) => {
         return res.status(500).send(error)
     }
 }
+let searchFriends = async(req, res) => {
+    let errorsArr = []
+    let validationErrors = validationResult(req)
+    if (!validationErrors.isEmpty()) {
+        let errors = Object.values(validationErrors.mapped())
+        errors.forEach(item => {
+            errorsArr.push(item.msg)
+        })
+        return res.status(500).send(errorsArr)
+    }
+    try {
+        let currentUserId = req.user._id // session
+        let keyword = req.params.keyword
+
+        let users = await contactService.searchFriends(currentUserId, keyword)
+        users = JSON.parse(JSON.stringify(users))
+        return res.render('main/group/section/_searchFriends', { users })
+    } catch (error) {
+        return res.status(500).send(error)
+    }
+}
 module.exports = {
     findUserContact: findUserContact,
     addNewContact: addNewContact,
@@ -102,5 +134,6 @@ module.exports = {
     getMoreContactReceived: getMoreContactReceived,
     removeRequestContactReceived: removeRequestContactReceived,
     approveRequestContactReceived: approveRequestContactReceived,
-    removeContact: removeContact
+    removeContact: removeContact,
+    searchFriends: searchFriends
 }

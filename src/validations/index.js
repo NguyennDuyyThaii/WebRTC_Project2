@@ -1,5 +1,6 @@
 const messageValidation = require("./messageValidation")
-
+const contactValidation = require("./contactValidate")
 module.exports = {
-    messageValidation: messageValidation
+    messageValidation: messageValidation,
+    contactValidation: contactValidation
 }
