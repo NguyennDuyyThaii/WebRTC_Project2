@@ -36,3 +36,11 @@
  + close modal: $("#streamModal").on("hidden.bs.modal", function() {}
  +  if (err.toString() === "NotFoundError: Requested device not found"): error call video máy cây đó, không có camera
  + if (err.toString() === "NotAllowedError: Permission denied") {}: error người dùng tắt truy cập camera mic đó
+ - note 6: bai 52: add group 
+ +  let arrayIds = []
+        $("ul#friends-added").find("li").each(function(index, item) {
+            // thanh vien trong nhom, database se luu duoi dang key:value
+            arrayIds.push({ "userId": $(item).data("uid") })
+        })
+        console.log(arrayIds)
+ + validations nha: // neu kieu du lieu truyen len ma khong co vd length-empty thi su dung custom nha

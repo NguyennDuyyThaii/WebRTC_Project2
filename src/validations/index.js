@@ -1,6 +1,8 @@
 const messageValidation = require("./messageValidation")
-const contactValidation = require("./contactValidate")
+const contactValidate = require("./contactValidate")
+const groupChatValidation = require("./groupChatValidation")
 module.exports = {
     messageValidation: messageValidation,
-    contactValidation: contactValidation
+    contactValidate: contactValidate,
+    groupChatValidation: groupChatValidation
 }

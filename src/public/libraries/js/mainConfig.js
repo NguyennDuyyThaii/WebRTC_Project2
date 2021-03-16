@@ -136,6 +136,12 @@ function gridPhotos(layoutNumber) {
 //     });
 // }
 
+function flashMasteryNotify() {
+    let notif = $(".master-success-message").text()
+    if (notif.length) {
+        alertify.notify(notif, "success", 7)
+    }
+}
 
 function changeTypeChat() {
     $("#select-type-chat").bind("change", function() {
@@ -193,7 +199,7 @@ $(document).ready(function() {
     // Tham số chỉ được phép trong khoảng từ 1 đến 5
     gridPhotos(5);
 
-
+    flashMasteryNotify()
 
     // thay doi kieu tro chuyen
     changeTypeChat();

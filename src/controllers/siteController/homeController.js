@@ -77,9 +77,30 @@ let getHome = async(req, res) => {
         bufferToBase64: bufferToBase64,
         lastItemOfArray: lastItemOfArray,
         convertTime: convertTime,
-        iceServerList: JSON.stringify(iceServerList)
+        iceServerList: JSON.stringify(iceServerList),
+        success: req.flash("success")
     });
 };
+let getLogout = (req, res) => {
+    req.logout()
+    req.flash("success", "Đăng xuất tài khoản thành công, hẹn gặp lại!")
+    return res.redirect("/login")
+}
+let checkloggedIn = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect('/login')
+    }
+    next()
+}
+let checkLoggedOut = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return res.redirect('/')
+    }
+    next()
+}
 module.exports = {
     getHome: getHome,
+    getLogout: getLogout,
+    checkLoggedOut: checkLoggedOut,
+    checkloggedIn: checkloggedIn
 };

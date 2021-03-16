@@ -4,14 +4,16 @@ const {
 } = require("./../validations/auth/registerValidation");
 const {
     messageValidation,
-    contactValidation
+    contactValidate,
+    groupChatValidation
 } = require("./../validations/index")
 const initPassportLocal = require("./../controllers/passportController/local");
 const {
     homeController,
     contactController,
     notificationController,
-    messageController
+    messageController,
+    groupChatController
 } = require("./../controllers/siteController/index");
 /**
  * config libraly
@@ -50,6 +52,7 @@ let initRouter = (app) => {
      * Site view
      */
     router.get("/", homeController.getHome);
+    router.get('/logout', homeController.getLogout);
     /**
      * Find User to contact, add contact, destroy contact
      */
@@ -82,7 +85,8 @@ let initRouter = (app) => {
          * 
          */
         // chat-group
-    router.get("/contact/search-friend/:keyword", contactValidation.searchFriends, contactController.searchFriends);
+    router.get("/contact/search-friend/:keyword", contactValidate.searchFriends, contactController.searchFriends);
+    router.post("/group-chat/add-new", groupChatValidation.addNewGroup, groupChatController.addNewGroup)
 
     router.post('/message/add-new-text-emoji', messageValidation.checkMessageLength, messageController.addNewTextEmoji)
 

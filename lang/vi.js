@@ -16,7 +16,7 @@ let transRegister = {
 let Registermailer = {
     subject: "NguyenDuyThai: Xác nhận thông tin tài khoản của bạn !",
     template: (linkVerify) => {
-        return`
+        return `
             <h2>Bạn nhận được Email này vì muốn đăng kí tài khoản với hệ thống của chúng tôi.</h2>
             <h3>Vui lòng Click vào liên kết bên dưới để kích hoạt tài khoản:</h3>
             <h3><a href="${linkVerify}" target="blank" >${linkVerify}</a></h3>
@@ -25,7 +25,7 @@ let Registermailer = {
     },
     send_faild: "Có lối trong quá trình gửi email, vui lòng xem lại tất cả các thông tin!",
     account_actived: "Kích hoạt tài khoản thành công, Bạn có thể đăng nhập",
-    logout_success: "Đăng xuất tài khoản thành công!" 
+    logout_success: "Đăng xuất tài khoản thành công!"
 }
 
 const transPassport = {
@@ -33,7 +33,7 @@ const transPassport = {
     login_failed: "Tài khoản hoặc mật khẩu không chính xác, hãy kiểm tra lại!",
     account_not_active: "Tài khoản này đã được đăng kí nhưng chưa được ACTIVE, kiểm tra email của bạn",
     login_success: (username) => {
-        return `Xin chào ${username}, Chúc bạn một ngày tốt lành!`
+        return `Xin chào <strong>${username}</strong>, Chúc bạn một ngày tốt lành!`
     }
 }
 module.exports = {

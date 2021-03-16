@@ -13,6 +13,9 @@ let chatGroupSchema = new Schema({
     deletedAt: { type: String, default: null }
 })
 chatGroupSchema.statics = {
+    createNew(item) {
+        return this.create(item);
+    },
     /**
      * 
      * @param {*} userId 

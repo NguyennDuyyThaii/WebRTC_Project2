@@ -1,3 +1,10 @@
+function increaseNumberMessageGroup(divId) {
+    let currentValue = +$(`.right[data-chat=${divId}]`).find("span.show-number-messages").text()
+    currentValue += 1
+
+    $(`.right[data-chat=${divId}]`).find("span.show-number-messages").html(currentValue)
+}
+
 function textAndEmojiChat(divId) {
     $(".emojionearea").unbind("keyup").on("keyup", function(e) {
         if (e.which === 13) {
@@ -22,18 +29,15 @@ function textAndEmojiChat(divId) {
                     }
                     // step 01
                 let messageOfMe = $(`<div class="bubble me"
-                 data-mess-id="${data.message._id}">
-            </div>`)
+                 data-mess-id="${data.message._id}"></div>`)
                 if (dataTextEmojiForSent.isChatGroup) {
-                    messageOfMe.html(`
-                    <img src="/images/users/${data.message.sender.avatar}" 
-                    alt="" class="avatar-small" title="${data.message.sender.name}">
-                    `)
+                    messageOfMe.html(`<img src="images/users/${data.message.sender.avatar}" 
+                   class="avatar-small" title="${data.message.sender.name}`)
                     messageOfMe.text(data.message.text)
                     increaseNumberMessageGroup(divId)
                     dataToEmit.groupId = targetId
                 } else {
-                    messageOfMe.html(data.message.text)
+                    messageOfMe.text(data.message.text)
                     dataToEmit.contactId = targetId
                 }
                 //step 2: append
@@ -85,8 +89,7 @@ $(document).ready(function() {
         if (response.currentGroupId) {
             messageOfYou.html(`
            <img src="/images/users/${response.message.sender.avatar}" 
-           alt="" class="avatar-small" title="${response.message.sender.name}">
-           `)
+           class="avatar-small" title="${response.message.sender.name}`)
             messageOfYou.text(response.message.text)
             divId = response.currentGroupId
             if (response.currentUserId !== $("#dropdown-navbar-user").data("uid")) {
