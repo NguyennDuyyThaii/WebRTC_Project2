@@ -1,3 +1,6 @@
+// step00
+socket.emit("check-status")
+
 // step01
 
 socket.on("server-send=list-user-online", function(listUsersId) {

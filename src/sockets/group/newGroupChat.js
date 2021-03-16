@@ -1,5 +1,5 @@
 let { pushSocketIdToArray, emitNotifyToArray, removeSocketIdFromArray } = require("./../../helpers/socketsHelpers")
-let typingOn = (io) => {
+let newGroupChat = (io) => {
     let clients = {};
     io.on("connection", (socket) => {
         // id socket alsway change ++ push socket id to array
@@ -7,43 +7,29 @@ let typingOn = (io) => {
         socket.request.user.chatGroupIds.forEach(item => {
                 clients = pushSocketIdToArray(clients, item._id, socket.id)
             })
-            // when have new group chat
+            /**
+             * 
+             */
         socket.on("new-group-created", (data) => {
             clients = pushSocketIdToArray(clients, data.groupChat._id, socket.id)
-        })
+                //
+            let response = {
+                groupChat: data.groupChat
+            }
+            data.groupChat.members.forEach(item => {
+                // k ban cai socket cho chinh thang tao nhom
+                if (clients[item.userId] && item.userId != socket.request.user._id) {
+                    emitNotifyToArray(clients, item.userId, io, "response-new-group-created", response)
+                }
+            })
+        });
+
         socket.on("member-received-group-chat", (data) => {
                 clients = pushSocketIdToArray(clients, data.groupChatId, socket.id)
             })
             /**
              * 
              */
-        socket.on("user-is-typing", (data) => {
-            //console.log(data)
-            // console.log(socket.request.user)
-            if (data.groupId) {
-                let response = {
-                    currentGroupId: data.groupId,
-                    currentUserId: socket.request.user._id
-                }
-                if (clients[data.groupId]) {
-
-                    emitNotifyToArray(clients, data.groupId, io, "response-user-is-typing", response)
-                }
-            }
-            if (data.contactId) {
-                let response = {
-                    currentUserId: socket.request.user._id,
-                }
-                if (clients[data.contactId]) {
-                    // gia su no mo 2 tab, thi hien ca 2 tab luon
-                    emitNotifyToArray(clients, data.contactId, io, "response-user-is-typing", response)
-                }
-            }
-
-        });
-        /**
-         * 
-         */
         socket.on("disconnect", () => {
             //remove socket Io when disconnect
             clients = removeSocketIdFromArray(clients, socket.request.user._id, socket)
@@ -53,4 +39,4 @@ let typingOn = (io) => {
         })
     });
 };
-module.exports = typingOn;
+module.exports = newGroupChat;

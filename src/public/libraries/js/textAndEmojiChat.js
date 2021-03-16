@@ -31,8 +31,7 @@ function textAndEmojiChat(divId) {
                 let messageOfMe = $(`<div class="bubble me"
                  data-mess-id="${data.message._id}"></div>`)
                 if (dataTextEmojiForSent.isChatGroup) {
-                    messageOfMe.html(`<img src="images/users/${data.message.sender.avatar}" 
-                   class="avatar-small" title="${data.message.sender.name}`)
+                    messageOfMe.html(`<img src="../../libraries/images/users/group-avatar-trungquandev.png"class="avatar-small" title="${data.message.sender.name}" >`)
                     messageOfMe.text(data.message.text)
                     increaseNumberMessageGroup(divId)
                     dataToEmit.groupId = targetId
@@ -87,9 +86,7 @@ $(document).ready(function() {
         data-mess-id="${response.message._id}">
    </div>`)
         if (response.currentGroupId) {
-            messageOfYou.html(`
-           <img src="/images/users/${response.message.sender.avatar}" 
-           class="avatar-small" title="${response.message.sender.name}`)
+            messageOfYou.html(`<img src="../../libraries/images/users/group-avatar-trungquandev.png" class="avatar-small" title="${response.message.sender.name}">`)
             messageOfYou.text(response.message.text)
             divId = response.currentGroupId
             if (response.currentUserId !== $("#dropdown-navbar-user").data("uid")) {

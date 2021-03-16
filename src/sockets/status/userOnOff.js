@@ -8,6 +8,17 @@ let userOnOff = (io) => {
             clients = pushSocketIdToArray(clients, item._id, socket.id)
         })
 
+        // vi thang nay no can load lai tranf
+        socket.on("check-status", () => {
+            // when have new group chat
+            socket.on("new-group-created", (data) => {
+                clients = pushSocketIdToArray(clients, data.groupChat._id, socket.id)
+            })
+            socket.on("member-received-group-chat", (data) => {
+                clients = pushSocketIdToArray(clients, data.groupChatId, socket.id)
+            })
+        })
+
         //console.log(Object.keys(clients)) => lay tat ca cai key cua object thoi
         // step01: Emit to user when logging or f5 web
         socket.emit("server-send=list-user-online", Object.keys(clients))

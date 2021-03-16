@@ -44,3 +44,5 @@
         })
         console.log(arrayIds)
  + validations nha: // neu kieu du lieu truyen len ma khong co vd length-empty thi su dung custom nha
+ - note 7: 
+ + khi chúng ta lấy dữ liệu từ 1 cái request ajax, những function nào liên quan đến nó thì chúng ta phải gọi lại

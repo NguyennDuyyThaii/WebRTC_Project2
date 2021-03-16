@@ -10,6 +10,16 @@ let chatTextEmoji = (io) => {
             /**
              * 
              */
+            // when have new group chat
+        socket.on("new-group-created", (data) => {
+            clients = pushSocketIdToArray(clients, data.groupChat._id, socket.id)
+        })
+        socket.on("member-received-group-chat", (data) => {
+            clients = pushSocketIdToArray(clients, data.groupChatId, socket.id)
+        })
+
+
+        //
         socket.on("chat-text-emoji", (data) => {
             // console.log(data)
             // console.log(socket.request.user)

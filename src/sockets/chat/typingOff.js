@@ -7,6 +7,13 @@ let typingOff = (io) => {
         socket.request.user.chatGroupIds.forEach(item => {
                 clients = pushSocketIdToArray(clients, item._id, socket.id)
             })
+            // when have new group chat
+        socket.on("new-group-created", (data) => {
+            clients = pushSocketIdToArray(clients, data.groupChat._id, socket.id)
+        })
+        socket.on("member-received-group-chat", (data) => {
+                clients = pushSocketIdToArray(clients, data.groupChatId, socket.id)
+            })
             /**
              * 
              */
