@@ -22,6 +22,7 @@ function addContact() {
                     .css("display", "inline-block");
                 increaseNumberNotification("noti_contact_counter", 1);
                 increaseNumberNotifiContact("count-request-contact-sent");
+                //increaseNumberNotifiContact("count-request-contact-received");
 
                 let userInfoHTML = $("#find-user")
                     .find(`ul li[data-uid=${targetId}]`)
@@ -65,7 +66,7 @@ ${user.username}
 <div class="user-address">
 <span>${user.address}
                     </span>
-</div>
+</div><br>
 <div class="user-approve-request-contact-received" data-uid="${user.id}">
 Chấp nhận
 </div>

@@ -225,7 +225,7 @@ function callCreateGroupChat() {
                     // Step08: Emit new group created
                     socket.emit("new-group-created", { groupChat: data.groupChat })
                         //step09
-                        //step10
+                        //step10: update online
                     socket.emit("check-status")
                 })
                 .fail(function(response) {

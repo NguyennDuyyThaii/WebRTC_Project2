@@ -16,10 +16,7 @@ $(document).ready(function() {
                                                                                                                      ">
                                         <div class="contactPanel">
                                             <div class="user-avatar">
-                                                <img src="images/users/
-                                                                                                                                    ${item.avatar}
-                                                                                                                                   
-                                                                                                                                " alt="">
+                                                <img src="images/users/${item.avatar}" alt="">
                                             </div>
                                             <div class="user-name">
                                                 <p>
