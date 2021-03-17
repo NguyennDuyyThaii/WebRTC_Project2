@@ -60,9 +60,7 @@ function imageChat(divId) {
                         message: data.message,
                     };
                     // data.data => buffer => let's console.log() => u will understand the problem
-                    let imageChat = `<img src="data:${
-            data.message.file.contentType
-          };base64,
+                    let imageChat = `<img src="data:${data.message.file.contentType};base64,
                 ${bufferToBase64(data.message.file.data.data)}" 
                 class="show-image-chat">`;
                     let messageOfMe = $(`<div class="bubble me bubble-image-file"
@@ -73,7 +71,7 @@ function imageChat(divId) {
                    <img src="/images/users/${data.message.sender.avatar}" 
                    alt="" class="avatar-small" title="${data.message.sender.name}">
                    `);
-                        messageOfMe.text(imageChat);
+                        messageOfMe.html(imageChat);
                         increaseNumberMessageGroup(divId);
                         dataToEmit.groupId = targetId;
                     } else {
@@ -130,9 +128,7 @@ $(document).ready(function() {
         let messageOfYou = $(`<div class="bubble you bubble-image-file"
          data-mess-id="${response.message._id}">
     </div>`)
-        let imageChat = `<img src="data:${
-        response.message.file.contentType
-      };base64,
+        let imageChat = `<img src="data:${response.message.file.contentType};base64,
             ${bufferToBase64(response.message.file.data.data)}" 
             class="show-image-chat">`;
 
