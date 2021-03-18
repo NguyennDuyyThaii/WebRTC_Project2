@@ -2,7 +2,15 @@ const { validationResult } = require("express-validator")
 const { messageService } = require("./../../services/site/index")
 const fsExtra = require("fs-extra")
 const multer = require("multer")
-    // handle text imoji chat
+const ejs = require("ejs")
+const { lastItemOfArray, convertTime, bufferToBase64 } = require("./../../helpers/clientHelper")
+const { promisify } = require("util")
+
+// make ejs function renderFile available with async await
+const renderFile = promisify(ejs.renderFile).bind(ejs)
+
+
+// handle text imoji chat
 let addNewTextEmoji = async(req, res) => {
         let errorsArr = []
         let validationErrors = validationResult(req)
@@ -125,8 +133,48 @@ let addNewAttachment = (req, res) => {
         }
     })
 }
+
+let realMoreAllChat = async(req, res) => {
+    try {
+        // + dua ve dang number neu khong no la dangj string
+        let skipPersonNal = +(req.query.skipPersonNal)
+        let skipGroup = +(req.query.skipGroup)
+
+        let newAllConversations = await messageService.realMoreAllChat(req.user._id, skipPersonNal, skipGroup)
+
+        let dataToRender = {
+                newAllConversations: newAllConversations,
+                lastItemOfArray: lastItemOfArray,
+                convertTime: convertTime,
+                bufferToBase64: bufferToBase64,
+                user: req.user
+            }
+            // cái này nó chưa hỗ trợ Promise đâu nhá => dung promisify
+            // ejs.renderFile(src/views/main/readMoreConversations/_leftSide.ejs, dataToRender, {}, function(err, str) {
+            //     if (err) {
+            //         console.log(err)
+            //         return
+            //     }
+            //     console.log(str)
+            // });
+        let leftSideData = await renderFile("src/views/main/readMoreConversations/_leftSide.ejs", dataToRender)
+        let rightSideData = await renderFile("src/views/main/readMoreConversations/_rightSide.ejs", dataToRender)
+        let imageSideData = await renderFile("src/views/main/readMoreConversations/_imageModal.ejs", dataToRender)
+        let attachmentSideData = await renderFile("src/views/main/readMoreConversations/_attachmentModal.ejs", dataToRender)
+
+        return res.status(200).send({
+            leftSideData: leftSideData,
+            rightSideData: rightSideData,
+            imageSideData: imageSideData,
+            attachmentSideData: attachmentSideData
+        })
+    } catch (error) {
+        return res.status(500).send(error)
+    }
+}
 module.exports = {
     addNewTextEmoji: addNewTextEmoji,
     addNewImage: addNewImage,
-    addNewAttachment: addNewAttachment
+    addNewAttachment: addNewAttachment,
+    realMoreAllChat: realMoreAllChat
 }

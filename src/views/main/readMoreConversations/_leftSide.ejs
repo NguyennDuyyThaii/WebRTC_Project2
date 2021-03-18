@@ -1,0 +1,69 @@
+<% newAllConversations.forEach(item=> { %>
+    <% if(item.members){ %>
+        <a href="#uid_<%=item._id %>" class="room-chat" data-target="#to_<%=item._id %>">
+            <li class="person group-chat" data-chat="<%=item._id%>">
+                <div class="left-avatar">
+                    <!-- <div class="dot"></div> -->
+                     <img
+                        src="../../libraries/images/users/group-avatar-trungquandev.png"
+                        alt="">
+                </div>
+                <span class="name">
+                    <span class="group-chat-name">
+                    <% if(item.name.length > 15){ %>
+                        <%=item.name.substr(0,12) %><span>...</span>
+                    <%}else{ %>
+                        <%=item.name %>
+                    <%} %> 
+                </span>
+                    </span>
+                    <span class="time">
+                        <%=convertTime(lastItemOfArray(item.messages).createdAt)  %> 
+                    </span>
+                    <span class="preview">
+                        <% if(lastItemOfArray(item.messages).messageType === "text"){ %>
+                            <%= lastItemOfArray(item.messages).text %> 
+                        <%  } %> 
+                        <% if(lastItemOfArray(item.messages).messageType === "image"){ %>
+                            Hình ảnh ...
+                        <%  } %> 
+                        <% if(lastItemOfArray(item.messages).messageType === "file"){ %>
+                            Tệp đính kèm ...
+                        <%  } %> 
+                    </span>
+                </li>
+            </a>
+        <%}else{ %>
+            <a href="#uid_<%=item._id  %>" class="room-chat" data-target="#to_<%=item._id %>">
+                <li class="person" data-chat="<%=item._id %>">
+                    <div class="left-avatar">
+                        <div class="dot"></div>
+                        <img src="../../libraries/images/users/<%= item.avatar %>" alt="">
+                    </div>
+                    <span class="name">
+                           
+                        <% if(item.username.length > 15){ %>
+                            <%=item.username.substr(0,12) %><span>...</span>
+                        <%}else{ %>
+                            <%=item.username %>
+                        <%} %> 
+                        </span>
+                    <span class="time">
+                        <%=convertTime(lastItemOfArray(item.messages).createdAt)  %> 
+                    </span>
+                    <br>
+                    <span class="preview">
+                        <% if(lastItemOfArray(item.messages).messageType === "text"){ %>
+                            <%= lastItemOfArray(item.messages).text %> 
+                        <%  } %> 
+                        <% if(lastItemOfArray(item.messages).messageType === "image"){ %>
+                            Hình ảnh ...
+                        <%  } %> 
+                        <% if(lastItemOfArray(item.messages).messageType === "file"){ %>
+                            Tệp đính kèm ...
+                        <%  } %> 
+                    </span>
+                </li>
+            </a>
+            <%} %>
+                <%})%>

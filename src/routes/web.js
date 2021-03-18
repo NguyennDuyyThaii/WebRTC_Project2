@@ -90,6 +90,8 @@ let initRouter = (app) => {
 
     router.post('/message/add-new-text-emoji', messageValidation.checkMessageLength, messageController.addNewTextEmoji)
 
+    router.get('/message/read-more-all-chat', messageController.realMoreAllChat)
+
     return app.use("/", router);
 };
 module.exports = initRouter;
