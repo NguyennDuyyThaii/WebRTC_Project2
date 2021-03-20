@@ -1,10 +1,10 @@
 const userModel = require('../../models/userModel')
 
-let updateAvatar = (id, updateUserItem) => {
+let updateUser = (id, updateUserItem) => {
 
     return userModel.updateUser(id, updateUserItem)
 
 }
 module.exports = {
-    updateAvatar: updateAvatar
+    updateUser: updateUser
 }

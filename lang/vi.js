@@ -39,7 +39,11 @@ let transPassport = {
 let transUpdateUser = {
     avatar_type: "Kiểu file không hợp lệ, chỉ chấp nhận định dạng jpg, png, jpeg",
     avatar_size: "Ảnh upload không được quá 1 MB",
-    avatar_updated: "Cập nhập ảnh đại diện thành công!"
+    avatar_updated: "Cập nhập ảnh đại diện thành công!",
+    user_info: "Cập nhập thông tin người dùng thành công!",
+    username: "Username giới hạn trong khoảng 3 đến 17 kí tự và không chứa các kí tự đặc biệt",
+    address: "Không được để trống địa chỉ, địa chỉ giới hạn trong khoảng 3 đến 30 kí tự!",
+    gender: "Oh có vấn đề gì đó liên quan đến giới tính, trình duyệt bạn có vấn đề? Hãy kiểm tra lại!"
 }
 module.exports = {
     transRegister: transRegister,

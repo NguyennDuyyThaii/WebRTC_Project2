@@ -4,6 +4,7 @@ const { app } = require("../../configs/app")
 const { transUpdateUser } = require("../../../lang/vi")
 const { userService } = require("./../../services/site/index")
 const fs = require("fs-extra")
+const { validationResult } = require("express-validator")
 let storageAvatar = multer.diskStorage({
     destination: (req, res, callback) => {
         callback(null, app.avatar_directory)
@@ -22,7 +23,7 @@ let avatarUploadFile = multer({
     limits: { fileSize: app.avatar_size }
     // thằng multer ấy nó chưa hỗ chợ cái validata File Too large đâu, vậy nên phải ghi đè
 }).single("avatar")
-let updateAvatar = async(req, res) => {
+let updateAvatar = (req, res) => {
     avatarUploadFile(req, res, async(error) => {
         if (error) {
             // message nay la cho thang Size do
@@ -36,7 +37,7 @@ let updateAvatar = async(req, res) => {
                 avatar: req.file.filename,
                 updatedAt: Date.now()
             }
-            let userUpdate = await userService.updateAvatar(req.user._id, updateUserItem)
+            let userUpdate = await userService.updateUser(req.user._id, updateUserItem)
 
             // remove old user avatar
             // cac ham update se return old item before update nha
@@ -52,7 +53,28 @@ let updateAvatar = async(req, res) => {
         }
     })
 }
-
+let updateUserInfo = async(req, res) => {
+    let errorArr = []
+    let validationErrors = validationResult(req)
+    if (!validationErrors.isEmpty()) {
+        let errors = Object.values(validationErrors.mapped())
+        errors.forEach(item => {
+            errorArr.push(item.msg)
+        })
+        return res.status(500).send(errorArr)
+    }
+    try {
+        let updateUserInfo = req.body
+        await userService.updateUser(req.user._id, updateUserInfo)
+        let result = {
+            message: transUpdateUser.user_info
+        }
+        return res.status(200).send(result)
+    } catch (error) {
+        return res.status(500).send(error)
+    }
+}
 module.exports = {
-    updateAvatar: updateAvatar
+    updateAvatar: updateAvatar,
+    updateUserInfo: updateUserInfo
 }

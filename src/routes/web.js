@@ -5,7 +5,8 @@ const {
 const {
     messageValidation,
     contactValidate,
-    groupChatValidation
+    groupChatValidation,
+    userValidation
 } = require("./../validations/index")
 const initPassportLocal = require("./../controllers/passportController/local");
 const {
@@ -49,7 +50,8 @@ let initRouter = (app) => {
     router.post("/register", registerValidation, register.postRegister);
     router.get("/verify/:token", register.verify);
 
-    router.put('/user/update-avatar', userController.updateAvatar)
+    router.put('/user/update-avatar', userValidation.updateInfo, userController.updateAvatar)
+    router.put('/user/update-info', userValidation.updateInfo, userController.updateUserInfo)
         /**
          * Site view
          */
