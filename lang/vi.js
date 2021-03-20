@@ -28,7 +28,7 @@ let Registermailer = {
     logout_success: "Đăng xuất tài khoản thành công!"
 }
 
-const transPassport = {
+let transPassport = {
     server_error: "Có lỗi ở phía Server, Vui lòng đăng nhập hoặc trở lại sau, cảm ơn.",
     login_failed: "Tài khoản hoặc mật khẩu không chính xác, hãy kiểm tra lại!",
     account_not_active: "Tài khoản này đã được đăng kí nhưng chưa được ACTIVE, kiểm tra email của bạn",
@@ -36,8 +36,14 @@ const transPassport = {
         return `Xin chào <strong>${username}</strong>, Chúc bạn một ngày tốt lành!`
     }
 }
+let transUpdateUser = {
+    avatar_type: "Kiểu file không hợp lệ, chỉ chấp nhận định dạng jpg, png, jpeg",
+    avatar_size: "Ảnh upload không được quá 1 MB",
+    avatar_updated: "Cập nhập ảnh đại diện thành công!"
+}
 module.exports = {
     transRegister: transRegister,
     Registermailer: Registermailer,
-    transPassport: transPassport
+    transPassport: transPassport,
+    transUpdateUser: transUpdateUser
 }

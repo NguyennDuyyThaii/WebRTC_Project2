@@ -9,14 +9,14 @@ function updateUserInfo() {
             let math = ["image/png", "image/jpeg", "image/jpg"]
             let limit = 1048576
 
-            if ($.inArray(fileData.type, math) === -1) {
-                alertify.notify("Kiểu file không hợp lệ, chỉ chấp nhận định dạng jpg,png,jpeg", "error", 7)
-                return false
-            }
-            if (fileData.size > limit) {
-                alertify.notify("Ảnh upload không được quá 1 MB", "error", 7)
-                return false
-            }
+            // if ($.inArray(fileData.type, math) === -1) {
+            //     alertify.notify("Kiểu file không hợp lệ, chỉ chấp nhận định dạng jpg, png, jpeg", "error", 7)
+            //     return false
+            // }
+            // if (fileData.size > limit) {
+            //     alertify.notify("Ảnh upload không được quá 1 MB", "error", 7)
+            //     return false
+            // }
             if (typeof(FileReader) != "undefined") {
                 let imagePreview = $("#image-edit-profile")
                 imagePreview.empty()
@@ -79,11 +79,25 @@ $(document).ready(function() {
                 contentType: false,
                 processData: false,
                 data: userAvatar,
-                success: function() {
-
+                success: function(data) {
+                    // display success
+                    $(".user-modal-alert-success").find("span").text(data.message)
+                    $(".user-modal-alert-success").css("display", "block")
+                        // update user at navbar
+                    $("#navbar-avatar").attr("src", data.imgSrc)
+                        // update origin avatar src
+                    originAvatarSrc = data.imgSrc
+                        // reset all
+                    $("#btn-cancel-user").click()
                 },
-                error: function() {
+                error: function(error) {
+                    // display error
+                    // console.log(error) de thay dc cai responseText
+                    $(".user-modal-alert-error").find("span").text(error.responseText)
+                    $(".user-modal-alert-error").css("display", "block")
 
+                    // reset all
+                    $("#btn-cancel-user").click()
                 }
             })
         })

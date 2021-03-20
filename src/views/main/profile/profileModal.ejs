@@ -27,14 +27,16 @@
                                 </div>
                                 <!-- edit form column -->
                                 <div class="col-md-9 personal-info">
-                                    <div class="alert alert-danger alert-dismissable">
-                                        <a class="panel-close close" data-dismiss="alert">×</a> Update user error example.<br>
+                                    <div class="alert alert-danger alert-dismissable user-modal-alert-error">
+                                        <a class="panel-close close" data-dismiss="alert">×</a><span>Update user error example.</span>
 
                                     </div>
-                                    <div class="alert alert-success alert-dismissable">
-                                        <a class="panel-close close" data-dismiss="alert">×</a> Update user success example.<br>
+                                    <div class="alert alert-success alert-dismissable user-modal-alert-success">
+                                        <a class="panel-close close" data-dismiss="alert">×</a><span>Update user error example.</span>
 
                                     </div>
+                                    <br>
+                                    <br>
                                     <% if(user.local.email) { %>
                                         <div class="form-control" disabled>
                                             <%=user.local.email %>
@@ -85,7 +87,7 @@
                                                 <div class="col-md-8">
                                                     <input type="button" id="btn-update-user" class="btn btn-primary custom-background-btn-primary" name="submit" value="Lưu lại">
                                                     <span></span>
-                                                    <input type="reset" id="btn-cancel-user" class="btn btn-default custom-background-btn-reset" value="Hủy bỏ">
+                                                    <input type="button" id="btn-cancel-user" class="btn btn-default custom-background-btn-reset" value="Hủy bỏ">
                                                 </div>
                                             </div>
                                 </div>

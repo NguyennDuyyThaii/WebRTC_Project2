@@ -1351,3 +1351,8 @@ label:focus,
 .show-number-members .show-number-messages {
     color: #2c3e50 !important;
 }
+
+.user-modal-alert-error,
+.user-modal-alert-success {
+    display: none
+}

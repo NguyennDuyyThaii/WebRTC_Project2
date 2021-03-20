@@ -13,7 +13,8 @@ const {
     contactController,
     notificationController,
     messageController,
-    groupChatController
+    groupChatController,
+    userController
 } = require("./../controllers/siteController/index");
 /**
  * config libraly
@@ -48,9 +49,10 @@ let initRouter = (app) => {
     router.post("/register", registerValidation, register.postRegister);
     router.get("/verify/:token", register.verify);
 
-    /**
-     * Site view
-     */
+    router.put('/user/update-avatar', userController.updateAvatar)
+        /**
+         * Site view
+         */
     router.get("/", homeController.getHome);
     router.get('/logout', homeController.getLogout);
     /**

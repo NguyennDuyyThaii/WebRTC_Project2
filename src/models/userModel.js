@@ -34,6 +34,9 @@ UserSchema.statics = {
     createNew(item) {
         return this.create(item);
     },
+    updateUser(id, item) {
+        return this.findByIdAndUpdate(id, item).exec()
+    },
     /**
      * check email user had existed
      */
