@@ -3,34 +3,34 @@ const { bufferToBase64, lastItemOfArray, convertTime } = require("./../../helper
 const request = require("request");
 let getICETurnServer = () => {
     return new Promise(async(resolve, reject) => {
-        // Node Get ICE STUN and TURN list
-        // let o = {
-        //     format: "urls"
-        // };
+        //Node Get ICE STUN and TURN list
+        let o = {
+            format: "urls"
+        };
 
-        // let bodyString = JSON.stringify(o);
+        let bodyString = JSON.stringify(o);
 
-        // let options = {
-        //     url: "https://global.xirsys.net/_turn/project-chat",
-        //     method: "PUT",
-        //     headers: {
-        //         "Authorization": "Basic " + Buffer.from("nguyenduythai:80690730-83c8-11eb-9f95-0242ac150002").toString("base64"),
-        //         "Content-Type": "application/json",
-        //         "Content-Length": bodyString.length
-        //     }
-        // };
-        // // call a request to get ICE list of turn server
-        // request(options, (error, response, body) => {
-        //     if (error) {
-        //         return reject(error);
-        //     }
-        //     // tra ve client luc nao cung la phai json, typeof body la string nhe => nen phai chon
-        //     // console.log(body)
-        //     // console.log(typeof body)
-        //     let bodyJson = JSON.parse(body) // Object
-        //     resolve(bodyJson.v.iceServers)
-        // })
-        resolve([])
+        let options = {
+            url: "https://global.xirsys.net/_turn/project-chat",
+            method: "PUT",
+            headers: {
+                "Authorization": "Basic " + Buffer.from("nguyenduythai:80690730-83c8-11eb-9f95-0242ac150002").toString("base64"),
+                "Content-Type": "application/json",
+                "Content-Length": bodyString.length
+            }
+        };
+        // call a request to get ICE list of turn server
+        request(options, (error, response, body) => {
+            if (error) {
+                return reject(error);
+            }
+            // tra ve client luc nao cung la phai json, typeof body la string nhe => nen phai chon
+            // console.log(body)
+            // console.log(typeof body)
+            let bodyJson = JSON.parse(body) // Object
+            resolve(bodyJson.v.iceServers)
+        })
+
     })
 }
 
