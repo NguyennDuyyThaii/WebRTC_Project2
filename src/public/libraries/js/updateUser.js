@@ -2,6 +2,31 @@ let userAvatar = null
 let userInfo = {}
 let originAvatarSrc = null
 let originUserInfo = {}
+let userUpdatePassword = {}
+
+function callLogout() {
+    let timerInterval
+    Swal.fire({
+        position: 'top-end',
+        title: 'Tự động đăng xuất sau 5 giây',
+        html: "Thời gian: <strong></strong>",
+        timer: 5000,
+        onBeforeOpen: () => {
+            Swal.showLoading();
+            timerInterval = setInterval(() => {
+                Swal.getContent().querySelector("strong").textContent = Math.ceil(Swal.getTimerLeft() / 1000);
+            }, 1000)
+        },
+        onClose: () => {
+            clearInterval(timerInterval)
+        }
+    }).then((result) => {
+        $.get("/logout", function() {
+            // reload lai trang
+            location.reload();
+        })
+    })
+}
 
 function updateUserInfo() {
     // avatar
@@ -91,6 +116,49 @@ function updateUserInfo() {
         }
         userInfo.gender = gender
     })
+
+    // password change
+    $("#input-change-current-password").bind("change", function() {
+        let currentPassword = $(this).val()
+        let regexPassword = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/)
+        if (!regexPassword.test(currentPassword)) {
+            alertify.notify("Mật khẩu phải có 8 kí tự, bao gồm chữ hoa chứ thường, kí tự đặc biệt và số!", "error", 7)
+            $(this).val(null)
+            delete userUpdatePassword.currentPassword
+            return false
+        }
+        userUpdatePassword.currentPassword = currentPassword
+    })
+    $("#input-change-new-password").bind("change", function() {
+        let newPassword = $(this).val()
+        let regexPassword = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/)
+        if (!regexPassword.test(newPassword)) {
+            alertify.notify("Mật khẩu phải có 8 kí tự, bao gồm chữ hoa chứ thường, kí tự đặc biệt và số!", "error", 7)
+            $(this).val(null)
+            delete userUpdatePassword.newPassword
+            return false
+        }
+        userUpdatePassword.newPassword = newPassword
+    })
+    $("#input-change-confirm-new-password").bind("change", function() {
+        let confirmPassword = $(this).val()
+        if (!userUpdatePassword.newPassword) {
+            alertify.notify("Bạn chưa nhập mật khẩu mới, hãy nhập trước khi làm bước này!", "error", 7)
+            $(this).val(null)
+            delete userUpdatePassword.confirmPassword
+            return false
+        }
+        if (confirmPassword !== userUpdatePassword.newPassword) {
+            alertify.notify("Nhập lại mật khẩu chưa chính xác, kiểm tra lại!", "error", 7)
+            $(this).val(null)
+            delete userUpdatePassword.confirmPassword
+            return false
+        }
+
+        userUpdatePassword.confirmPassword = confirmPassword
+    })
+
+
 }
 
 function callUpdateUserAvatar() {
@@ -156,6 +224,41 @@ function callUpdateUserInfo() {
         }
     })
 }
+
+function callUpdateUserPassword() {
+    $.ajax({
+        url: '/user/update-password',
+        type: 'put',
+        // muốn truyền cái formData thì cần false 3 cái này
+        data: userUpdatePassword,
+        success: function(data) {
+            // display success
+            $(".user-modal-password-alert-success").find("span").text(data.message)
+            $(".user-modal-password-alert-success").css("display", "block")
+                // update origin user info
+                // Object.assign() được sử dụng để sao chép các giá trị của tất
+                //  cả thuộc tính có thể liệt kê từ một hoặc nhiều đối tượng nguồn 
+                //  đến một đối tượng đích. Nó sẽ trả về đối tượng đích đó.
+                // originUserInfo = Object.assign(originUserInfo, userInfo)
+                //     // update name navbar
+                // $("#navbar-username").text(originUserInfo.username)
+                // reset all
+            $("#input-btn-cancel-user-password").click()
+
+            // logout after change password success
+            callLogout()
+        },
+        error: function(error) {
+            // display error
+            // console.log(error) de thay dc cai responseText
+            $(".user-modal-password-alert-error").find("span").text(error.responseText)
+            $(".user-modal-password-alert-error").css("display", "block")
+
+            // reset all
+            $("#input-btn-cancel-user-password").click()
+        }
+    })
+}
 $(document).ready(function() {
     updateUserInfo()
         // lấy cái src của ảnh gốc
@@ -192,5 +295,37 @@ $(document).ready(function() {
         $("#input-change-address").val(originUserInfo.address)
 
 
+    })
+
+    // update password
+
+    $("#input-btn-update-user-password").bind("click", function() {
+        if (!userUpdatePassword.newPassword || !userUpdatePassword.confirmPassword || !userUpdatePassword.currentPassword) {
+            alertify.notify("Bạn phải thay đổi tất cả thông tin trước khi cập nhập!", "error", 7)
+            return false
+        }
+        Swal.fire({
+            title: 'Bạn có chắc muốn thay đổi lại mật khẩu?',
+            text: "Bạn không thể hoàn lại thao tác này!",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#2ECC71',
+            cancelButtonColor: '#ff7675',
+            confirmButtonText: 'Xác nhận',
+            cancelButtonText: 'Huỷ'
+        }).then((result) => {
+            if (!result.value) {
+                $("#input-btn-cancel-user-password").click()
+                return false;
+            }
+            callUpdateUserPassword()
+        })
+
+    })
+    $("#input-btn-cancel-user-password").bind("click", function() {
+        userUpdatePassword = {}
+        $("#input-change-current-password").val(null)
+        $("#input-change-new-password").val(null)
+        $("#input-change-confirm-new-password").val(null)
     })
 })

@@ -15,6 +15,20 @@ let updateInfo = [
     .isIn(["male", "female"])
 ]
 
+let updatePassword = [
+    check("currentPassword", transUpdateUser.current_password)
+    .isLength({ min: 8 })
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/),
+    check("newPassword", transUpdateUser.current_password)
+    .isLength({ min: 8 })
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/),
+    check("confirmPassword", transUpdateUser.confirmPassword)
+    .custom((value, { req }) => {
+        return value === req.body.newPassword
+    })
+
+]
 module.exports = {
-    updateInfo: updateInfo
+    updateInfo: updateInfo,
+    updatePassword: updatePassword
 }

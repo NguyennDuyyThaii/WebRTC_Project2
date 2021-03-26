@@ -82,9 +82,9 @@ let getHome = async(req, res) => {
     });
 };
 let getLogout = (req, res) => {
-    req.logout()
-    req.flash("success", "Đăng xuất tài khoản thành công, hẹn gặp lại!")
-    return res.redirect("/login")
+    req.logout();
+    req.flash("success", "Đăng xuất tài khoản thành công, hẹn gặp lại!");
+    return res.redirect("/login");
 }
 let checkloggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {

@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/NguyennDuyyThaii/Messenger_WebRTC#readme",
   "dependencies": {
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "bluebird": "^3.7.2",
     "body-parser": "^1.18.2",
     "connect-flash": "^0.1.1",

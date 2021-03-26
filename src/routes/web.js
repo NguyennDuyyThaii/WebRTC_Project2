@@ -36,9 +36,9 @@ let initRouter = (app) => {
     /**
      * SignIn-SignUp
      */
-    router.get("/login", login.getLogin);
+    router.get("/login", homeController.checkLoggedOut, login.getLogin);
     router.post(
-        "/login",
+        "/login", homeController.checkLoggedOut,
         passport.authenticate("local", {
             successRedirect: "/",
             failureRedirect: "/login",
@@ -46,55 +46,56 @@ let initRouter = (app) => {
             failureFlash: true,
         })
     );
-    router.get("/register", register.getRegister);
-    router.post("/register", registerValidation, register.postRegister);
-    router.get("/verify/:token", register.verify);
+    router.get("/register", homeController.checkLoggedOut, register.getRegister);
+    router.post("/register", homeController.checkLoggedOut, registerValidation, register.postRegister);
+    router.get("/verify/:token", homeController.checkLoggedOut, register.verify);
 
-    router.put('/user/update-avatar', userValidation.updateInfo, userController.updateAvatar)
-    router.put('/user/update-info', userValidation.updateInfo, userController.updateUserInfo)
+    router.put('/user/update-avatar', homeController.checkloggedIn, userValidation.updateInfo, userController.updateAvatar)
+    router.put('/user/update-info', homeController.checkloggedIn, userValidation.updateInfo, userController.updateUserInfo)
+    router.put('/user/update-password', homeController.checkloggedIn, userValidation.updatePassword, userController.updatePassword)
         /**
          * Site view
          */
-    router.get("/", homeController.getHome);
-    router.get('/logout', homeController.getLogout);
+    router.get("/", homeController.checkloggedIn, homeController.getHome);
+    router.get('/logout', homeController.checkloggedIn, homeController.getLogout);
     /**
      * Find User to contact, add contact, destroy contact
      */
-    router.get("/contact/find-user/:keyword", contactController.findUserContact);
-    router.post("/contact/add-new-contact", contactController.addNewContact);
+    router.get("/contact/find-user/:keyword", homeController.checkloggedIn, contactController.findUserContact);
+    router.post("/contact/add-new-contact", homeController.checkloggedIn, contactController.addNewContact);
     router.delete(
-        "/contact/remove-request-contact-sent",
+        "/contact/remove-request-contact-sent", homeController.checkloggedIn,
         contactController.removeRequestContactSent
     );
-    router.get("/contacts/read-more", contactController.getMoreContact);
-    router.get("/contacts/read-more-sent", contactController.getMoreContactSent);
+    router.get("/contacts/read-more", homeController.checkloggedIn, contactController.getMoreContact);
+    router.get("/contacts/read-more-sent", homeController.checkloggedIn, contactController.getMoreContactSent);
     router.get(
-        "/contacts/read-more-received",
+        "/contacts/read-more-received", homeController.checkloggedIn,
         contactController.getMoreContactReceived
     );
-    router.delete('/contact/remove-request-contact-received', contactController.removeRequestContactReceived)
-    router.put('/contact/approve-request-contact-received', contactController.approveRequestContactReceived)
-    router.delete('/contact/user-remove-contact', contactController.removeContact)
+    router.delete('/contact/remove-request-contact-received', homeController.checkloggedIn, contactController.removeRequestContactReceived)
+    router.put('/contact/approve-request-contact-received', homeController.checkloggedIn, contactController.approveRequestContactReceived)
+    router.delete('/contact/user-remove-contact', homeController.checkloggedIn, contactController.removeContact)
         /**
          * load more notifications + mark all as read
          */
-    router.get("/notification/read-more", notificationController.getMoreNotifi);
+    router.get("/notification/read-more", homeController.checkloggedIn, notificationController.getMoreNotifi);
     router.put(
-        "/notification/mark-all-as-read",
+        "/notification/mark-all-as-read", homeController.checkloggedIn,
         notificationController.markAllAsRead
     );
-    router.post('/messages/add-new-image', messageController.addNewImage)
-    router.post('/messages/add-new-attachment', messageController.addNewAttachment)
+    router.post('/messages/add-new-image', homeController.checkloggedIn, messageController.addNewImage)
+    router.post('/messages/add-new-attachment', homeController.checkloggedIn, messageController.addNewAttachment)
         /**
          * 
          */
         // chat-group
-    router.get("/contact/search-friend/:keyword", contactValidate.searchFriends, contactController.searchFriends);
-    router.post("/group-chat/add-new", groupChatValidation.addNewGroup, groupChatController.addNewGroup)
+    router.get("/contact/search-friend/:keyword", homeController.checkloggedIn, contactValidate.searchFriends, contactController.searchFriends);
+    router.post("/group-chat/add-new", homeController.checkloggedIn, groupChatValidation.addNewGroup, groupChatController.addNewGroup)
 
-    router.post('/message/add-new-text-emoji', messageValidation.checkMessageLength, messageController.addNewTextEmoji)
+    router.post('/message/add-new-text-emoji', homeController.checkloggedIn, messageValidation.checkMessageLength, messageController.addNewTextEmoji)
 
-    router.get('/message/read-more-all-chat', messageController.realMoreAllChat)
+    router.get('/message/read-more-all-chat', homeController.checkloggedIn, messageController.realMoreAllChat)
 
     return app.use("/", router);
 };

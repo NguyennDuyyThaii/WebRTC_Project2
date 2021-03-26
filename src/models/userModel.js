@@ -61,6 +61,9 @@ UserSchema.statics = {
     findUserById(id) {
         return this.findById(id, { "local.password": 0 }).exec();
     },
+    findUser(id) {
+        return this.findById(id).exec();
+    },
     /**
      * find all user not friend to add contact
      * @param {*} deprecatedUserId
@@ -104,6 +107,9 @@ UserSchema.statics = {
                 },
             ],
         }, { _id: 1, username: 1, address: 1, avatar: 1 }).exec();
+    },
+    updatePassword(id, hashPassword) {
+        return this.findByIdAndUpdate(id, { "local.password": hashPassword }).exec();
     }
 };
 UserSchema.methods = {

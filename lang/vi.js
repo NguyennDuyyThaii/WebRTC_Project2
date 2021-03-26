@@ -1,7 +1,7 @@
 let transRegister = {
     email_incorect: "Email phải có định dạng example@gmail.com",
     email_not_empty: "Email không được để trống",
-    password_incorect: "Mật khẩu phải có ít nhất 8 kí tự, bao gồm chữ hoa, chữ thường",
+    password_incorect: "Mật khẩu phải có ít nhất 8 kí tự, bao gồm chữ hoa, chữ thường và số",
     password_not_empty: "Mật khẩu không được để trống",
     re_password_incorect: "Nhập lại mật khẩu chưa chính xác, bạn hãy nhập lại",
     gender_incorect: "Giới tính chưa được tích, hãy kiểm tra lại",
@@ -43,7 +43,12 @@ let transUpdateUser = {
     user_info: "Cập nhập thông tin người dùng thành công!",
     username: "Username giới hạn trong khoảng 3 đến 17 kí tự và không chứa các kí tự đặc biệt",
     address: "Không được để trống địa chỉ, địa chỉ giới hạn trong khoảng 3 đến 30 kí tự!",
-    gender: "Oh có vấn đề gì đó liên quan đến giới tính, trình duyệt bạn có vấn đề? Hãy kiểm tra lại!"
+    gender: "Oh có vấn đề gì đó liên quan đến giới tính, trình duyệt bạn có vấn đề? Hãy kiểm tra lại!",
+    user_password: "Cập nhập mật khẩu người dùng thành công!",
+    account_undifined: "Tài khoản này không tồn tại, có lỗi nặng rồi!",
+    current_password_failed: "Nhập mật khẩu hiện tại không chính xác, hãy nhập lại",
+    current_password: "Mật khẩu phải có ít nhất 8 kí tự, bao gồm chữ hoa, chữ thường",
+    confirmPassword: "Nhập lại mật khẩu mới chưa chính xác, bạn hãy nhập lại"
 }
 module.exports = {
     transRegister: transRegister,
