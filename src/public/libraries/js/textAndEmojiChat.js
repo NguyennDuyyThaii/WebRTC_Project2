@@ -28,13 +28,14 @@ function textAndEmojiChat(divId) {
                         message: data.message
                     }
                     // step 01
-                let messageOfMe = $(`<div class="bubble me"
-                 data-mess-id="${data.message._id}"></div>`)
+                let messageOfMe = $(`<div class="bubble me" data-mess-id="${data.message._id}"></div>`);
+                let ok = messageOfMe.text(data.message.text).html()
                 if (dataTextEmojiForSent.isChatGroup) {
-                    messageOfMe.html(`<img src="../../libraries/images/users/group-avatar-trungquandev.png"class="avatar-small" title="${data.message.sender.name}" >`)
-                    messageOfMe.text(data.message.text)
-                    increaseNumberMessageGroup(divId)
-                    dataToEmit.groupId = targetId
+                    let senderAvatar = (`<img src="../../libraries/images/users/${data.message.sender.avatar}" class="avatar-small" title="${data.message.sender.name}">`);
+
+                    messageOfMe.html(`${senderAvatar} ${ok}`);
+                    increaseNumberMessageGroup(divId);
+                    dataToEmit.groupId = targetId;
                 } else {
                     messageOfMe.text(data.message.text)
                     dataToEmit.contactId = targetId
@@ -82,13 +83,12 @@ $(document).ready(function() {
     socket.on("response-chat-text-emoji", function(response) {
         let divId = ""
             //step 1
-        let messageOfYou = $(`<div class="bubble you"
-        data-mess-id="${response.message._id}">
-   </div>`)
+        let messageOfYou = $(`<div class="bubble you" data-mess-id="${response.message._id}"></div>`);
+        let ok = messageOfYou.text(response.message.text).html()
         if (response.currentGroupId) {
-            messageOfYou.html(`<img src="../../libraries/images/users/group-avatar-trungquandev.png" class="avatar-small" title="${response.message.sender.name}">`)
-            messageOfYou.text(response.message.text)
-            divId = response.currentGroupId
+            let senderAvatar = (`<img src="../../libraries/images/users/${response.message.sender.avatar}" class="avatar-small" title="${response.message.sender.name}">`);
+            messageOfYou.html(`${senderAvatar} ${ok}`);
+            divId = response.currentGroupId;
             if (response.currentUserId !== $("#dropdown-navbar-user").data("uid")) {
                 increaseNumberMessageGroup(divId)
             }
