@@ -242,7 +242,7 @@ $(document).ready(function() {
                 call.answer(stream); // Answer the call with an A/V stream.
                 call.on('stream', function(remoteStream) {
                     // play stream of caller
-                    playVideoStream("remote-stream", remoteStream)
+                    playVideoStream("remote-stream", stream)
                 });
                 // close modal: remove stream
                 $("#streamModal").on("hidden.bs.modal", function() {

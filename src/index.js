@@ -75,6 +75,6 @@ initSockets(io);
 // server.listen(process.env.APP_PORT, () => {
 //     console.log(`Server is starting on port ${process.env.APP_PORT}`);
 // });
-server.listen(process.env.PORT, () => {
-    console.log(`Server is starting on port ${process.env.PORT}`);
+server.listen(process.env.APP_PORT, () => {
+    console.log(`Server is starting on port ${process.env.APP_PORT}`);
 });
